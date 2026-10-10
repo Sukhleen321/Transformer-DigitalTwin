@@ -1,0 +1,20 @@
+{
+  "entry_files": 755,
+  "changed": [
+    "backend/app/api/v1/live_physics_demo.py",
+    "backend/app/services/live_physics_demo.py",
+    "backend/scripts/Start-LivePhysicsDemo.ps1",
+    "backend/scripts/live_physics_demo.py",
+    "backend/scripts/live_physics_producer.py",
+    "backend/scripts/verify_live_physics_pipeline.py",
+    "backend/tests/test_live_physics_demo.py",
+    "docs/live_physics_demo_model.md",
+    "frontend/src/components/console/PhysicsFeatureCards.tsx",
+    "frontend/src/hooks/usePhysics.ts",
+    "backend/.env.example",
+    "backend/README.md",
+    "backend/app/core/config.py",
+    "frontend/README.md"
+  ],
+  "missing": []
+}

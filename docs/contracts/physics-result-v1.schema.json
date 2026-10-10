@@ -1,0 +1,1965 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Future physics result envelope 1.0.0 — contract only; no current API route",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "physics_contract_version",
+    "transformer_id",
+    "timestamp",
+    "evaluated_at",
+    "context",
+    "lineage",
+    "versions",
+    "components"
+  ],
+  "properties": {
+    "physics_contract_version": {
+      "const": "1.0.0"
+    },
+    "transformer_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^\\S(?:.*\\S)?$"
+    },
+    "timestamp": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "evaluated_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$"
+    },
+    "context": {
+      "enum": [
+        "OPERATIONAL",
+        "CONTROLLED_SIMULATION"
+      ]
+    },
+    "lineage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_kind",
+        "origin_kind",
+        "input_verification",
+        "acquisition_reference",
+        "origin_transformer_id",
+        "replay_run_id",
+        "evidence_references"
+      ],
+      "properties": {
+        "source_kind": {
+          "enum": [
+            "LIVE",
+            "SIMULATED",
+            "REPLAYED",
+            "UNKNOWN"
+          ]
+        },
+        "origin_kind": {
+          "enum": [
+            "LIVE",
+            "SIMULATED",
+            "UNKNOWN"
+          ]
+        },
+        "input_verification": {
+          "enum": [
+            "VERIFIED",
+            "UNVERIFIED",
+            "SYNTHETIC",
+            "MIXED",
+            "UNKNOWN"
+          ]
+        },
+        "acquisition_reference": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "origin_transformer_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "replay_run_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence_references": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "versions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model_version",
+        "parameter_version",
+        "configuration_version",
+        "preprocessing_version",
+        "equation_registry_version"
+      ],
+      "properties": {
+        "model_version": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "parameter_version": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "configuration_version": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preprocessing_version": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "equation_registry_version": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "components": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "measured_oil_temperature",
+        "top_oil_temperature",
+        "hot_spot_temperature",
+        "top_oil_rise",
+        "winding_hot_spot_gradient",
+        "total_loss",
+        "ageing_acceleration_factor",
+        "equivalent_ageing_hours",
+        "fem_hot_spot_temperature",
+        "hot_spot_difference"
+      ],
+      "properties": {
+        "measured_oil_temperature": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/component"
+            },
+            {
+              "properties": {
+                "unit": {
+                  "const": "DEG_C"
+                },
+                "result_kind": {
+                  "const": "MEASURED_TELEMETRY"
+                }
+              }
+            },
+            {
+              "properties": {
+                "value": {
+                  "minimum": -273.15
+                }
+              }
+            }
+          ]
+        },
+        "top_oil_temperature": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/component"
+            },
+            {
+              "properties": {
+                "unit": {
+                  "const": "DEG_C"
+                },
+                "result_kind": {
+                  "const": "CALCULATED_ESTIMATE"
+                }
+              }
+            },
+            {
+              "properties": {
+                "value": {
+                  "minimum": -273.15
+                }
+              }
+            }
+          ]
+        },
+        "hot_spot_temperature": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/component"
+            },
+            {
+              "properties": {
+                "unit": {
+                  "const": "DEG_C"
+                },
+                "result_kind": {
+                  "const": "CALCULATED_ESTIMATE"
+                }
+              }
+            },
+            {
+              "properties": {
+                "value": {
+                  "minimum": -273.15
+                }
+              }
+            }
+          ]
+        },
+        "top_oil_rise": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/component"
+            },
+            {
+              "properties": {
+                "unit": {
+                  "const": "K"
+                },
+                "result_kind": {
+                  "const": "CALCULATED_ESTIMATE"
+                }
+              }
+            }
+          ]
+        },
+        "winding_hot_spot_gradient": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/component"
+            },
+            {
+              "properties": {
+                "unit": {
+                  "const": "K"
+                },
+                "result_kind": {
+                  "const": "CALCULATED_ESTIMATE"
+                }
+              }
+            }
+          ]
+        },
+        "total_loss": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/component"
+            },
+            {
+              "properties": {
+                "unit": {
+                  "const": "W"
+                },
+                "result_kind": {
+                  "const": "CALCULATED_ESTIMATE"
+                }
+              }
+            },
+            {
+              "properties": {
+                "value": {
+                  "minimum": 0
+                }
+              }
+            }
+          ]
+        },
+        "ageing_acceleration_factor": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/component"
+            },
+            {
+              "properties": {
+                "unit": {
+                  "const": "1"
+                },
+                "result_kind": {
+                  "const": "CALCULATED_ESTIMATE"
+                }
+              }
+            },
+            {
+              "properties": {
+                "value": {
+                  "minimum": 0
+                }
+              }
+            }
+          ]
+        },
+        "equivalent_ageing_hours": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/component"
+            },
+            {
+              "properties": {
+                "unit": {
+                  "const": "h"
+                },
+                "result_kind": {
+                  "const": "CALCULATED_ESTIMATE"
+                }
+              }
+            },
+            {
+              "properties": {
+                "value": {
+                  "minimum": 0
+                }
+              }
+            }
+          ]
+        },
+        "fem_hot_spot_temperature": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/component"
+            },
+            {
+              "properties": {
+                "unit": {
+                  "const": "DEG_C"
+                },
+                "result_kind": {
+                  "const": "SIMULATED_REFERENCE"
+                }
+              }
+            },
+            {
+              "properties": {
+                "value": {
+                  "minimum": -273.15
+                }
+              }
+            }
+          ]
+        },
+        "hot_spot_difference": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/component"
+            },
+            {
+              "properties": {
+                "unit": {
+                  "const": "K"
+                },
+                "result_kind": {
+                  "const": "CALCULATED_ESTIMATE"
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "status": {
+                    "const": "READY"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "provenance": {
+                    "properties": {
+                      "comparison_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "components": {
+            "anyOf": [
+              {
+                "properties": {
+                  "measured_oil_temperature": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "top_oil_temperature": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "hot_spot_temperature": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "top_oil_rise": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "winding_hot_spot_gradient": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "total_loss": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "ageing_acceleration_factor": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "equivalent_ageing_hours": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "fem_hot_spot_temperature": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "hot_spot_difference": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$"
+          },
+          "versions": {
+            "properties": {
+              "preprocessing_version": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "lineage": {
+            "properties": {
+              "acquisition_reference": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence_references": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "components": {
+            "anyOf": [
+              {
+                "properties": {
+                  "top_oil_temperature": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "hot_spot_temperature": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "top_oil_rise": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "winding_hot_spot_gradient": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "total_loss": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "ageing_acceleration_factor": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "equivalent_ageing_hours": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "fem_hot_spot_temperature": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "hot_spot_difference": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "versions": {
+            "properties": {
+              "model_version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "parameter_version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "configuration_version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "preprocessing_version": {
+                "type": "string",
+                "minLength": 1
+              },
+              "equation_registry_version": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "components": {
+                "anyOf": [
+                  {
+                    "properties": {
+                      "measured_oil_temperature": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "top_oil_temperature": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "hot_spot_temperature": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "top_oil_rise": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "winding_hot_spot_gradient": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "total_loss": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "ageing_acceleration_factor": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "equivalent_ageing_hours": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "fem_hot_spot_temperature": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "hot_spot_difference": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "context": {
+                "const": "OPERATIONAL"
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "lineage": {
+            "properties": {
+              "origin_kind": {
+                "const": "LIVE"
+              },
+              "input_verification": {
+                "const": "VERIFIED"
+              },
+              "source_kind": {
+                "enum": [
+                  "LIVE",
+                  "REPLAYED"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "components": {
+            "properties": {
+              "measured_oil_temperature": {
+                "properties": {
+                  "status": {
+                    "const": "READY"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "lineage": {
+            "properties": {
+              "origin_kind": {
+                "const": "LIVE"
+              },
+              "source_kind": {
+                "enum": [
+                  "LIVE",
+                  "REPLAYED"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "components": {
+            "properties": {
+              "hot_spot_difference": {
+                "properties": {
+                  "status": {
+                    "const": "READY"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "components": {
+            "properties": {
+              "hot_spot_temperature": {
+                "properties": {
+                  "status": {
+                    "const": "READY"
+                  }
+                }
+              },
+              "fem_hot_spot_temperature": {
+                "properties": {
+                  "status": {
+                    "const": "READY"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "lineage": {
+            "properties": {
+              "source_kind": {
+                "const": "REPLAYED"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "lineage": {
+            "properties": {
+              "origin_transformer_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "replay_run_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "components": {
+                "anyOf": [
+                  {
+                    "properties": {
+                      "top_oil_temperature": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "hot_spot_temperature": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "top_oil_rise": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "winding_hot_spot_gradient": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "total_loss": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "ageing_acceleration_factor": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "equivalent_ageing_hours": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "fem_hot_spot_temperature": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "hot_spot_difference": {
+                        "properties": {
+                          "status": {
+                            "const": "READY"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "properties": {
+              "context": {
+                "const": "CONTROLLED_SIMULATION"
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "lineage": {
+            "properties": {
+              "origin_kind": {
+                "const": "SIMULATED"
+              },
+              "input_verification": {
+                "enum": [
+                  "SYNTHETIC",
+                  "MIXED"
+                ]
+              },
+              "source_kind": {
+                "enum": [
+                  "SIMULATED",
+                  "REPLAYED"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "context": {
+                "const": "CONTROLLED_SIMULATION"
+              }
+            }
+          },
+          {
+            "properties": {
+              "components": {
+                "properties": {
+                  "top_oil_temperature": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "components": {
+            "properties": {
+              "top_oil_temperature": {
+                "properties": {
+                  "provenance": {
+                    "properties": {
+                      "case_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "context": {
+                "const": "CONTROLLED_SIMULATION"
+              }
+            }
+          },
+          {
+            "properties": {
+              "components": {
+                "properties": {
+                  "hot_spot_temperature": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "components": {
+            "properties": {
+              "hot_spot_temperature": {
+                "properties": {
+                  "provenance": {
+                    "properties": {
+                      "case_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "context": {
+                "const": "CONTROLLED_SIMULATION"
+              }
+            }
+          },
+          {
+            "properties": {
+              "components": {
+                "properties": {
+                  "top_oil_rise": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "components": {
+            "properties": {
+              "top_oil_rise": {
+                "properties": {
+                  "provenance": {
+                    "properties": {
+                      "case_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "context": {
+                "const": "CONTROLLED_SIMULATION"
+              }
+            }
+          },
+          {
+            "properties": {
+              "components": {
+                "properties": {
+                  "winding_hot_spot_gradient": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "components": {
+            "properties": {
+              "winding_hot_spot_gradient": {
+                "properties": {
+                  "provenance": {
+                    "properties": {
+                      "case_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "context": {
+                "const": "CONTROLLED_SIMULATION"
+              }
+            }
+          },
+          {
+            "properties": {
+              "components": {
+                "properties": {
+                  "total_loss": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "components": {
+            "properties": {
+              "total_loss": {
+                "properties": {
+                  "provenance": {
+                    "properties": {
+                      "case_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "context": {
+                "const": "CONTROLLED_SIMULATION"
+              }
+            }
+          },
+          {
+            "properties": {
+              "components": {
+                "properties": {
+                  "ageing_acceleration_factor": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "components": {
+            "properties": {
+              "ageing_acceleration_factor": {
+                "properties": {
+                  "provenance": {
+                    "properties": {
+                      "case_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "context": {
+                "const": "CONTROLLED_SIMULATION"
+              }
+            }
+          },
+          {
+            "properties": {
+              "components": {
+                "properties": {
+                  "equivalent_ageing_hours": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "components": {
+            "properties": {
+              "equivalent_ageing_hours": {
+                "properties": {
+                  "provenance": {
+                    "properties": {
+                      "case_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "context": {
+                "const": "CONTROLLED_SIMULATION"
+              }
+            }
+          },
+          {
+            "properties": {
+              "components": {
+                "properties": {
+                  "fem_hot_spot_temperature": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "components": {
+            "properties": {
+              "fem_hot_spot_temperature": {
+                "properties": {
+                  "provenance": {
+                    "properties": {
+                      "case_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "context": {
+                "const": "CONTROLLED_SIMULATION"
+              }
+            }
+          },
+          {
+            "properties": {
+              "components": {
+                "properties": {
+                  "hot_spot_difference": {
+                    "properties": {
+                      "status": {
+                        "const": "READY"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "components": {
+            "properties": {
+              "hot_spot_difference": {
+                "properties": {
+                  "provenance": {
+                    "properties": {
+                      "case_id": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "message",
+        "paths"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]*$"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model_id",
+        "equation_ids",
+        "input_paths",
+        "evidence_references",
+        "case_id",
+        "comparison_id",
+        "numerical_verification_reference",
+        "mesh_convergence_reference"
+      ],
+      "properties": {
+        "model_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "equation_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "input_paths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "evidence_references": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "case_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "comparison_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "numerical_verification_reference": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mesh_convergence_reference": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end",
+        "covered_seconds",
+        "expected_seconds",
+        "fraction",
+        "gap_count",
+        "missing_fields"
+      ],
+      "properties": {
+        "start": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "end": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "covered_seconds": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "expected_seconds": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "fraction": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "gap_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "missing_fields": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "unit",
+        "result_kind",
+        "status",
+        "reasons",
+        "missing_inputs",
+        "warnings",
+        "assumptions",
+        "coverage",
+        "provenance"
+      ],
+      "properties": {
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result_kind": {
+          "enum": [
+            "MEASURED_TELEMETRY",
+            "CALCULATED_ESTIMATE",
+            "SIMULATED_REFERENCE"
+          ]
+        },
+        "status": {
+          "enum": [
+            "READY",
+            "INITIALIZING",
+            "INSUFFICIENT_DATA",
+            "INVALID_CONFIGURATION",
+            "MODEL_ERROR"
+          ]
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/issue"
+          }
+        },
+        "missing_inputs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/issue"
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "message",
+              "reference"
+            ],
+            "properties": {
+              "message": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reference": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "coverage": {
+          "$ref": "#/$defs/coverage"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "READY"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "reasons": {
+                "maxItems": 0
+              },
+              "missing_inputs": {
+                "maxItems": 0
+              },
+              "provenance": {
+                "properties": {
+                  "input_paths": {
+                    "minItems": 1
+                  },
+                  "evidence_references": {
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "value": {
+                "type": "null"
+              },
+              "reasons": {
+                "minItems": 1
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "READY"
+              },
+              "result_kind": {
+                "enum": [
+                  "CALCULATED_ESTIMATE",
+                  "SIMULATED_REFERENCE"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "provenance": {
+                "properties": {
+                  "model_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "equation_ids": {
+                    "minItems": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "READY"
+              },
+              "result_kind": {
+                "const": "SIMULATED_REFERENCE"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "provenance": {
+                "properties": {
+                  "case_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "numerical_verification_reference": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "mesh_convergence_reference": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

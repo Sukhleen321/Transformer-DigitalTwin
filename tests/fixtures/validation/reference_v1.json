@@ -1,0 +1,53 @@
+{
+  "scope": "SYNTHETIC_NUMERICAL_REGRESSION",
+  "origin_kind": "SIMULATED",
+  "input_verification": "SYNTHETIC",
+  "context": "CONTROLLED_SIMULATION",
+  "case_sha256": "c648bf0fad068b00434942534d5e3ecf5a44bec9b1d7c16173e69561b0690f50",
+  "evidence_reference": "docs/validation_reference.md",
+  "units": {
+    "elapsed_seconds": "s",
+    "temperature_k": "K",
+    "fem_maximum_k": "K",
+    "fem_maximum_rise_relative_error": "1"
+  },
+  "thermal_records": [
+    {
+      "elapsed_seconds": 0.1,
+      "temperature_k": [
+        300.99845194776765,
+        301.951587325976
+      ]
+    },
+    {
+      "elapsed_seconds": 1,
+      "temperature_k": [
+        309.12672139752425,
+        316.1198987880821
+      ]
+    },
+    {
+      "elapsed_seconds": 5,
+      "temperature_k": [
+        325.4601994293733,
+        342.65444536115217
+      ]
+    },
+    {
+      "elapsed_seconds": 20,
+      "temperature_k": [
+        329.9852513951582,
+        349.97613625608227
+      ]
+    },
+    {
+      "elapsed_seconds": 100,
+      "temperature_k": [
+        330.0000000000175,
+        350.0000000000183
+      ]
+    }
+  ],
+  "fem_maximum_k": 309.99799226574834,
+  "fem_maximum_rise_relative_error": 0.0002007734251662896
+}

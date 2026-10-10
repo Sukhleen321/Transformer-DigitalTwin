@@ -1,0 +1,31 @@
+{
+  "default_demo_enabled": false,
+  "default_physics_enabled": false,
+  "production_route_present": true,
+  "demo_route_present": true,
+  "fleet_assets": [
+    "KA-BLR-KOR-TX01",
+    "KA-BLR-KOR-TX02",
+    "KA-BLR-KOR-TX03",
+    "KA-BLR-KOR-TX04",
+    "KA-BLR-HSR-TX05",
+    "KA-BLR-HSR-TX06",
+    "KA-BLR-HSR-TX07",
+    "KA-BLR-HSR-TX08",
+    "KA-BLR-BTM-TX09",
+    "KA-BLR-BTM-TX10"
+  ],
+  "source_hashes": {
+    "app.core.config": "595f5922bcabbcc1257c80ff560eb06f76e3531f617346eadc87fa7d92a528ab",
+    "app.services.demo_telemetry": "aa279d14ab0327fbc5c6af18ea273900148b3fdc0f9422a2666039466f6ea4f4",
+    "app.services.live_physics_demo": "68304a6ebfe55ec87245afbe2989c843036d72770b9241609a883f08d710b650",
+    "app.services.ingestion_service": "96fe814b968cad728626a504ac605270a2eea7f670ee94d5811ce311c7b6c728",
+    "ml.demo_physics.scenario": "885181986ba8541087668fa0b7136dff0515c1479b97b015636df5a3b64a741b",
+    "ml.demo_physics.fem": "375a1b5640eceb29528dd7b008793c16ea8824de4838564e7eb3276e2be63b65",
+    "ml.demo_physics.fleet": "60cbf81c3eb9819db05dc8d41f42d727919bc491824d6ec7098fe4baf5915378"
+  },
+  "demo_ml_configuration": "UNVERIFIED",
+  "image_tag": "4054e9ebf69d4838b624fd1830c36bf7",
+  "all_source_hashes_match": true,
+  "application_stack_started": false
+}

@@ -1,4 +1,5 @@
 import type { Latest, Telemetry } from '../../api/contracts';
+import type { ReactNode } from 'react';
 import { contactLabel, freshness, thermalReady } from '../../monitoring';
 import { timeLabel, valueLabel as displayNumber } from './presentation';
 import { Activity, Droplets, Gauge, Thermometer, Zap, Wrench } from 'lucide-react';
@@ -39,7 +40,7 @@ export function SourceStrip({ data, lastSuccess, error, now }: { data?: Latest |
     <details><summary>Identity and quality</summary><p>Snapshot: {t?.acquisition?.snapshot_id ?? 'Unknown'} · Received: {timeLabel(t?.received_at)} · Timezone evidence: {t?.acquisition?.timezone_status ?? 'UNKNOWN'} · Expected cadence: {displayNumber(t?.acquisition?.expected_interval_seconds, 's')}</p><p>Bundle: {a?.metadata?.versions?.bundle_id ?? 'Unknown'} · Configuration: {a?.metadata?.versions?.configuration_version ?? 'Unknown'} · Inference: {a?.inference_status ?? 'Unavailable'}</p></details>
   </section>;
 }
-export function FeaturePanels({ data }: { data?: Latest | null }) {
+export function FeaturePanels({ data, children, label = 'Six monitoring features' }: { data?: Latest | null; children?: ReactNode; label?: string }) {
   const t = data?.telemetry, a = data?.analytics;
   const thermalUnit = a?.metadata?.thermal_temperature_unit ?? a?.metadata?.units?.thermal_model_temperature;
   const compatible = thermalReady(a) && thermalUnit === t?.acquisition?.field_units.oil_temperature;
@@ -51,5 +52,5 @@ export function FeaturePanels({ data }: { data?: Latest | null }) {
     { title: 'Overload capacity', icon: Activity, state: a?.loading_percent == null ? 'Assessment unavailable' : 'Backend loading assessment', value: displayNumber(a?.loading_percent, '%'), evidence: `Only the supplied backend loading result is shown. ${a?.reason_codes?.filter(r => r.includes('OVERLOAD')).join(', ') || 'No overload reason supplied'}. No duration/headroom estimate is supplied.` },
     { title: 'Predictive maintenance', icon: Wrench, state: a?.maintenance_priority ?? 'Recommendation unavailable', value: displayNumber(a?.health_index, '/ 100 HI'), evidence: a?.maintenance_recommendation ?? 'No recommendation supplied. Operational risk and RUL remain unavailable without required evidence.' },
   ];
-  return <section className="feature-grid" aria-label="Six monitoring features">{features.map(f => <article className="feature-panel" key={f.title}><div className="feature-heading"><f.icon size={18}/><h3>{f.title}</h3></div><Badge>{f.state}</Badge><strong className="feature-value">{f.value}</strong><p>{f.evidence}</p><footer><EventTime value={f.title === 'Pressure monitoring' ? null : f.title === 'Oil-leak detection' || f.title === 'Electrical-fault monitoring' ? t?.timestamp : a?.timestamp}/> · {t?.acquisition?.source_kind ?? 'UNKNOWN'}</footer></article>)}</section>;
+  return <section className="feature-grid" aria-label={label}>{features.map(f => <article className="feature-panel" key={f.title}><div className="feature-heading"><f.icon size={18}/><h3>{f.title}</h3></div><Badge>{f.state}</Badge><strong className="feature-value">{f.value}</strong><p>{f.evidence}</p><footer><EventTime value={f.title === 'Pressure monitoring' ? null : f.title === 'Oil-leak detection' || f.title === 'Electrical-fault monitoring' ? t?.timestamp : a?.timestamp}/> · {t?.acquisition?.source_kind ?? 'UNKNOWN'}</footer></article>)}{children}</section>;
 }

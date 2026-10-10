@@ -56,7 +56,9 @@ class Scheduler:
                     raise ValueError("invalid, overlapping or unordered timeline")
                 previous_end = b
             generator = SyntheticGenerator(asset, seed=item.get("seed", config.get("seed", 42) + index),
-                                           interval_s=item.get("interval_seconds", config.get("interval_seconds", 5)))
+                                           interval_s=item.get("interval_seconds", config.get("interval_seconds", 5)),
+                                           signal_profile=config.get('signal_profile'),
+                                           phase=2 * math.pi * index / len(config['assets']))
             self.assets[asset.transformer_id] = AssetClock(unit, generator, self.start, timeline, self.start)
 
     def tick(self):

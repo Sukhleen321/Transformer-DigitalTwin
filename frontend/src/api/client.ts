@@ -1,5 +1,7 @@
 import { z } from 'zod';
 import * as c from './contracts';
+import { physicsSchema } from './physics';
+import { livePhysicsDemoSchema } from './livePhysicsDemo';
 
 export class ApiError extends Error {
   constructor(message: string, public status: number, public code: string) { super(message); }
@@ -12,6 +14,13 @@ async function parseRequest<T>(path: string, schema: z.ZodType<T>, signal?: Abor
   if (!response.ok) {
     const body: unknown = await response.json().catch(() => null);
     const error = z.object({ error: z.object({ code: z.string(), message: z.string() }) }).safeParse(body);
+    // This demo route has three safe public setup diagnostics in the existing
+    // error envelope. Other endpoints retain their established error behavior.
+    const diagnostic = path.startsWith('/demo/transformers/') && response.status === 404
+      ? z.object({ error: z.object({ details: z.object({ message: z.enum([
+        'Live physics demo is disabled for this environment', 'No live simulation event available', 'Transformer not found',
+      ]) }) }) }).safeParse(body) : null;
+    if (diagnostic?.success) throw new ApiError(diagnostic.data.error.details.message, response.status, error.success ? error.data.error.code : 'HTTP_ERROR');
     throw new ApiError(error.success ? error.data.error.message : `API HTTP ${response.status}`, response.status, error.success ? error.data.error.code : 'HTTP_ERROR');
   }
   const value: unknown = await response.json().catch(() => null);
@@ -38,6 +47,8 @@ function resourceIdentity<T extends { transformer_id: string }>(value: T, id: st
   return value;
 }
 export const api = {
+  livePhysicsDemo: async (id: string, signal?: AbortSignal) => resourceIdentity(await request(`/demo${assetPath(id)}/physics`, livePhysicsDemoSchema, signal), id),
+  physics: async (id: string, signal?: AbortSignal) => resourceIdentity(await request(`${assetPath(id)}/physics`, physicsSchema, signal), id),
   registry: (signal?: AbortSignal, offset = 0) => request(`/transformers?${pageQuery(offset, 50)}`, c.pageSchema(c.assetSchema), signal),
   latest: async (id: string, signal?: AbortSignal) => {
     const value = await request(`${assetPath(id)}/latest`, c.latestSchema, signal);

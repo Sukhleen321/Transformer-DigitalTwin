@@ -671,3 +671,18 @@ There is no database deletion, relabelling, active-flag migration or ingestion
 restriction on preserved legacy spool records. New source startup idempotently
 registers fictional nameplates; conflicting existing values are not overwritten.
 See [the current fleet report](../../docs/hackathon_readiness/execution/TEN_TRANSFORMER_FLEET.md).
+
+## Physics read resource
+
+GET `/api/v1/transformers/{transformer_id}/physics` returns the separate frozen
+physics envelope 1.0.0. Optional `at` is an aware event cutoff; search is bounded
+to the preceding 31 days and one matching telemetry/physics event. All ten
+components retain units, status, reasons, coverage and provenance. Unavailable
+values are null. Existing public-read authentication, X-Request-ID and error
+envelopes apply: 404 unknown asset, 409 source identity conflict, 422 invalid
+query, sanitized 500 internal failure. There is no write operation.
+
+Controlled thermal results are synthetic two-node proxies. Operational thermal,
+ageing, FEM hot-spot and comparison remain unavailable. Integration disabled
+or no explicit profile/result gives a complete unavailable envelope. Full rules:
+[physics integration](../../docs/physics_integration.md).

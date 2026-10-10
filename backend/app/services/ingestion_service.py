@@ -144,6 +144,12 @@ def ingest_record(session: Session, record: TelemetryIn, *, run_ml=True,
             processing_repo.save_receipt(session, record, snapshot, telemetry,
                 outcome=outcome, ml_status=receipt_ml_status)
             session.info.setdefault('h02_pending_receipts', set()).add(snapshot)
+        if get_settings().physics_enabled:
+            from app.services.physics_service import prepare as prepare_physics
+            prepare_physics(session, telemetry, duplicate=duplicate)
+        if get_settings().live_physics_demo_enabled:
+            from app.services.demo_telemetry import prepare as prepare_demo
+            prepare_demo(session, telemetry, duplicate=duplicate)
         result = IngestResult(telemetry_id=telemetry.id, duplicate=duplicate,
             analytics=analytics_out, warnings=warnings, snapshot_id=snapshot, ingestion_outcome=outcome)
         session.info[transactional_ml.KEY]['results'].append(result)

@@ -1,0 +1,308 @@
+{
+  "validation_id": "PHASE4_INDEPENDENT_VALIDATION_V1",
+  "version": "1.0.0",
+  "context": "CONTROLLED_SIMULATION",
+  "origin_kind": "SIMULATED",
+  "input_verification": "SYNTHETIC",
+  "evidence_reference": "docs/validation_reference.md",
+  "epoch": "2026-10-10T00:00:00Z",
+  "thermal_parameters": {
+    "oil_thermal_resistance": {
+      "value": 1,
+      "unit": "K/W",
+      "quantity_kind": "thermal_resistance",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": [
+        0.01,
+        100
+      ]
+    },
+    "winding_thermal_resistance": {
+      "value": 1,
+      "unit": "K/W",
+      "quantity_kind": "thermal_resistance",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": [
+        0.01,
+        100
+      ]
+    },
+    "oil_thermal_capacitance": {
+      "value": 1,
+      "unit": "J/K",
+      "quantity_kind": "thermal_capacitance",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": [
+        0.01,
+        100
+      ]
+    },
+    "winding_thermal_capacitance": {
+      "value": 1,
+      "unit": "J/K",
+      "quantity_kind": "thermal_capacitance",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": [
+        0.01,
+        100
+      ]
+    },
+    "ambient_temperature": {
+      "value": 300,
+      "unit": "K",
+      "quantity_kind": "absolute_temperature",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": [
+        100,
+        1000
+      ]
+    },
+    "initial_oil_temperature": {
+      "value": 300,
+      "unit": "K",
+      "quantity_kind": "absolute_temperature",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": [
+        100,
+        1000
+      ]
+    },
+    "initial_winding_temperature": {
+      "value": 300,
+      "unit": "K",
+      "quantity_kind": "absolute_temperature",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": [
+        100,
+        1000
+      ]
+    },
+    "minimum_temperature": {
+      "value": 100,
+      "unit": "K",
+      "quantity_kind": "absolute_temperature",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": [
+        100,
+        1000
+      ]
+    },
+    "maximum_temperature": {
+      "value": 1000,
+      "unit": "K",
+      "quantity_kind": "absolute_temperature",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": [
+        100,
+        1000
+      ]
+    },
+    "oil_heat_input": {
+      "value": 10,
+      "unit": "W",
+      "quantity_kind": "heat_rate",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": [
+        0,
+        1000
+      ]
+    },
+    "winding_heat_input": {
+      "value": 20,
+      "unit": "W",
+      "quantity_kind": "heat_rate",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": [
+        0,
+        1000
+      ]
+    }
+  },
+  "policy": {
+    "max_sample_age_seconds": {
+      "value": 60,
+      "unit": "s",
+      "quantity_kind": "duration",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    "max_gap_seconds": {
+      "value": 100,
+      "unit": "s",
+      "quantity_kind": "duration",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    "required_history_seconds": {
+      "value": 0,
+      "unit": "s",
+      "quantity_kind": "duration",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    "analytic_temperature_tolerance": {
+      "value": 1e-08,
+      "unit": "K",
+      "quantity_kind": "temperature_difference",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    "steady_temperature_tolerance": {
+      "value": 1e-08,
+      "unit": "K",
+      "quantity_kind": "temperature_difference",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    "sanity_temperature_tolerance": {
+      "value": 1e-09,
+      "unit": "K",
+      "quantity_kind": "temperature_difference",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    "energy_balance_tolerance": {
+      "value": 1e-08,
+      "unit": "J",
+      "quantity_kind": "energy",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    "power_balance_tolerance": {
+      "value": 1e-10,
+      "unit": "W",
+      "quantity_kind": "heat_rate",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    "relative_denominator_floor": {
+      "value": 0.001,
+      "unit": "K",
+      "quantity_kind": "temperature_difference",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    "fem_balance_tolerance": {
+      "value": 1e-08,
+      "unit": "W",
+      "quantity_kind": "heat_rate",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    }
+  },
+  "sample_times": [
+    {
+      "value": 0,
+      "unit": "s",
+      "quantity_kind": "duration",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    {
+      "value": 0.1,
+      "unit": "s",
+      "quantity_kind": "duration",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    {
+      "value": 1,
+      "unit": "s",
+      "quantity_kind": "duration",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    {
+      "value": 5,
+      "unit": "s",
+      "quantity_kind": "duration",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    {
+      "value": 20,
+      "unit": "s",
+      "quantity_kind": "duration",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    {
+      "value": 100,
+      "unit": "s",
+      "quantity_kind": "duration",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    }
+  ],
+  "variations": {
+    "heat_multiplier": {
+      "value": 2,
+      "unit": "1",
+      "quantity_kind": "dimensionless",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    "ambient_resistance_multiplier": {
+      "value": 0.5,
+      "unit": "1",
+      "quantity_kind": "dimensionless",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    "capacitance_multiplier": {
+      "value": 2,
+      "unit": "1",
+      "quantity_kind": "dimensionless",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    },
+    "time_scale_probe": {
+      "value": 10,
+      "unit": "s",
+      "quantity_kind": "duration",
+      "verification": "SYNTHETIC",
+      "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+      "valid_range": null
+    }
+  },
+  "fem_case_id": "SYNTHETIC_SINE_RECTANGLE_V1",
+  "fem_case_sha256": "e7dbc75fa6d4c5fb9bf2ea7af2b4c8e4da32637e48ccc4dd1fc071b4b3d432ea",
+  "fem_sanity_subdivisions": {
+    "value": 16,
+    "unit": "count",
+    "quantity_kind": "count",
+    "verification": "SYNTHETIC",
+    "evidence_reference": "PHASE4_INDEPENDENT_VALIDATION_V1",
+    "valid_range": null
+  }
+}

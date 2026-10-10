@@ -13,9 +13,11 @@ dependencies = ["numpy>=1.24,<3", "pandas>=2,<3", "scipy>=1.10,<2", "scikit-lear
 h05-test = ["jsonschema==4.26.0"]
 
 [tool.setuptools]
-packages = ["ml", "ml.pipeline", "ml.features", "ml.thermal", "ml.anomaly", "ml.health", "ml.maintenance", "ml.prediction", "ml.rul", "ml.energy"]
+packages = ["ml", "ml.pipeline", "ml.features", "ml.thermal", "ml.anomaly", "ml.health", "ml.maintenance", "ml.prediction", "ml.rul", "ml.energy", "ml.physics", "ml.fem", "ml.validation", "ml.demo_physics"]
 package-dir = {ml = "."}
 include-package-data = false
 
 [tool.setuptools.package-data]
 "ml.rul" = ["fictional_scenario_v1.json"]
+"ml.fem" = ["synthetic_sine_v1.json"]
+"ml.validation" = ["cases_v1.json"]

@@ -1,0 +1,55 @@
+{
+  "fixture_version": "1.0.0",
+  "kind": "SYNTHETIC_NUMERICAL_REGRESSION",
+  "case_id": "SYNTHETIC_SINE_RECTANGLE_V1",
+  "case_sha256": "e7dbc75fa6d4c5fb9bf2ea7af2b4c8e4da32637e48ccc4dd1fc071b4b3d432ea",
+  "reference": "docs/fem_reference.md",
+  "note": "Recorded after manufactured-solution checks passed. Regression data is not independent truth or field validation.",
+  "units": {
+    "nx": "count",
+    "nodes": "count",
+    "elements": "count",
+    "l2_error": "K*m",
+    "h1_seminorm_error": "K",
+    "maximum_temperature": "K",
+    "source_power": "W"
+  },
+  "meshes": [
+    {
+      "nx": 8,
+      "nodes": 81,
+      "elements": 128,
+      "l2_error": 0.21132773474226213,
+      "h1_seminorm_error": 4.317982830064736,
+      "maximum_temperature": 309.87247679202216,
+      "source_power": 80.00000000000006
+    },
+    {
+      "nx": 16,
+      "nodes": 289,
+      "elements": 512,
+      "l2_error": 0.05377435010011689,
+      "h1_seminorm_error": 2.1753633635952836,
+      "maximum_temperature": 309.96793425572105,
+      "source_power": 80.00000000000004
+    },
+    {
+      "nx": 32,
+      "nodes": 1089,
+      "elements": 2048,
+      "l2_error": 0.013504362485503121,
+      "h1_seminorm_error": 1.0897542351921934,
+      "maximum_temperature": 309.9919719651781,
+      "source_power": 80.00000000000001
+    },
+    {
+      "nx": 64,
+      "nodes": 4225,
+      "elements": 8192,
+      "l2_error": 0.00337992334839594,
+      "h1_seminorm_error": 0.545137045359989,
+      "maximum_temperature": 309.99799226574834,
+      "source_power": 80.00000000000009
+    }
+  ]
+}

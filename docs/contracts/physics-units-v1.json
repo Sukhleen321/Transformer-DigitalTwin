@@ -1,0 +1,110 @@
+{
+  "physics_contract_version": "1.0.0",
+  "note": "Exact decimal strings are unit constants, not physical parameter defaults. No unsupported source unit is convertible.",
+  "identity_units": [
+    "s",
+    "m",
+    "A",
+    "V",
+    "Hz",
+    "W",
+    "VA",
+    "var",
+    "J",
+    "K",
+    "1",
+    "W/(m*K)",
+    "kg/m^3",
+    "J/(kg*K)",
+    "W/m^3",
+    "W/(m^2*K)",
+    "W/m^2",
+    "STATUS",
+    "count",
+    "K/W",
+    "J/K"
+  ],
+  "rules": [
+    {
+      "id": "absolute_deg_c_to_k",
+      "quantity_kind": "absolute_temperature",
+      "source_unit": "DEG_C",
+      "target_unit": "K",
+      "scale": "1",
+      "offset": "273.15",
+      "reference": "SI-2026"
+    },
+    {
+      "id": "difference_deg_c_to_k",
+      "quantity_kind": "temperature_difference",
+      "source_unit": "DEG_C",
+      "target_unit": "K",
+      "scale": "1",
+      "offset": "0",
+      "reference": "SI-2026"
+    },
+    {
+      "id": "kw_to_w",
+      "quantity_kind": "active_power",
+      "source_unit": "kW",
+      "target_unit": "W",
+      "scale": "1000",
+      "offset": "0",
+      "reference": "SI-2026"
+    },
+    {
+      "id": "kva_to_va",
+      "quantity_kind": "apparent_power",
+      "source_unit": "kVA",
+      "target_unit": "VA",
+      "scale": "1000",
+      "offset": "0",
+      "reference": "SI-2026"
+    },
+    {
+      "id": "kvar_to_var",
+      "quantity_kind": "reactive_power",
+      "source_unit": "kVAr",
+      "target_unit": "var",
+      "scale": "1000",
+      "offset": "0",
+      "reference": "SI-2026"
+    },
+    {
+      "id": "kwh_to_j",
+      "quantity_kind": "energy",
+      "source_unit": "kWh",
+      "target_unit": "J",
+      "scale": "3600000",
+      "offset": "0",
+      "reference": "SI-2026"
+    },
+    {
+      "id": "hours_to_seconds",
+      "quantity_kind": "duration",
+      "source_unit": "h",
+      "target_unit": "s",
+      "scale": "3600",
+      "offset": "0",
+      "reference": "SI-2026"
+    },
+    {
+      "id": "percent_to_one",
+      "quantity_kind": "fraction",
+      "source_unit": "percent",
+      "target_unit": "1",
+      "scale": "0.01",
+      "offset": "0",
+      "reference": "PROJECT_PERCENT_CONVENTION"
+    },
+    {
+      "id": "mm_to_m",
+      "quantity_kind": "length",
+      "source_unit": "mm",
+      "target_unit": "m",
+      "scale": "0.001",
+      "offset": "0",
+      "reference": "SI-2026"
+    }
+  ]
+}

@@ -1,0 +1,243 @@
+4:05:07 pm [vite] Internal server error: Failed to resolve import "zod" from "src/api/client.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/client.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  import * as c from "./contracts";
+  3  |  export class ApiError extends Error {
+      at TransformPluginContext._formatLog (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26593:18)
+      at async file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26663:30
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26629:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20157:26)
+4:05:07 pm [vite] (client) Pre-transform error: Failed to resolve import "zod" from "src/api/client.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/client.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  import * as c from "./contracts";
+  3  |  export class ApiError extends Error {
+4:05:07 pm [vite] (client) Pre-transform error: Failed to resolve import "zod" from "src/api/client.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/client.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  import * as c from "./contracts";
+  3  |  export class ApiError extends Error {
+4:05:07 pm [vite] (client) Pre-transform error: Failed to resolve import "zod" from "src/api/contracts.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/contracts.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  const num = z.number().finite().nullable();
+  3  |  const text = z.string().nullable();
+4:05:24 pm [vite] Internal server error: Failed to resolve import "zod" from "src/api/client.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/client.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  import * as c from "./contracts";
+  3  |  export class ApiError extends Error {
+      at TransformPluginContext._formatLog (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26593:18)
+      at async file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26663:30
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26629:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20157:26)
+      at async viteTransformMiddleware (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20377:20)
+4:05:24 pm [vite] (client) Pre-transform error: Failed to resolve import "zod" from "src/api/contracts.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/contracts.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  const num = z.number().finite().nullable();
+  3  |  const text = z.string().nullable();
+4:05:36 pm [vite] Internal server error: Failed to resolve import "zod" from "src/api/client.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/client.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  import * as c from "./contracts";
+  3  |  export class ApiError extends Error {
+      at TransformPluginContext._formatLog (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26593:18)
+      at async file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26663:30
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26629:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20157:26)
+      at async viteTransformMiddleware (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20377:20)
+4:05:36 pm [vite] (client) Pre-transform error: Failed to resolve import "zod" from "src/api/contracts.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/contracts.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  const num = z.number().finite().nullable();
+  3  |  const text = z.string().nullable();
+4:05:43 pm [vite] Internal server error: Failed to resolve import "zod" from "src/api/client.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/client.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  import * as c from "./contracts";
+  3  |  export class ApiError extends Error {
+      at TransformPluginContext._formatLog (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26593:18)
+      at async file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26663:30
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26629:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20157:26)
+      at async viteTransformMiddleware (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20377:20)
+4:05:43 pm [vite] (client) Pre-transform error: Failed to resolve import "zod" from "src/api/contracts.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/contracts.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  const num = z.number().finite().nullable();
+  3  |  const text = z.string().nullable();
+4:05:58 pm [vite] Internal server error: Failed to resolve import "zod" from "src/api/client.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/client.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  import * as c from "./contracts";
+  3  |  export class ApiError extends Error {
+      at TransformPluginContext._formatLog (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26593:18)
+      at async file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26663:30
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26629:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20157:26)
+      at async viteTransformMiddleware (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20377:20)
+4:05:58 pm [vite] (client) Pre-transform error: Failed to resolve import "zod" from "src/api/contracts.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/contracts.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  const num = z.number().finite().nullable();
+  3  |  const text = z.string().nullable();
+4:08:18 pm [vite] Internal server error: Failed to resolve import "zod" from "src/api/client.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/client.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  import * as c from "./contracts";
+  3  |  export class ApiError extends Error {
+      at TransformPluginContext._formatLog (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26593:18)
+      at async file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26663:30
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26629:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20157:26)
+      at async viteTransformMiddleware (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20377:20)
+4:08:18 pm [vite] (client) Pre-transform error: Failed to resolve import "zod" from "src/api/contracts.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/contracts.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  const num = z.number().finite().nullable();
+  3  |  const text = z.string().nullable();
+4:08:20 pm [vite] Internal server error: Failed to resolve import "zod" from "src/api/client.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/client.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  import * as c from "./contracts";
+  3  |  export class ApiError extends Error {
+      at TransformPluginContext._formatLog (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26593:18)
+      at async file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26663:30
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26629:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20157:26)
+      at async viteTransformMiddleware (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20377:20)
+4:08:20 pm [vite] (client) Pre-transform error: Failed to resolve import "zod" from "src/api/contracts.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/contracts.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  const num = z.number().finite().nullable();
+  3  |  const text = z.string().nullable();
+4:08:20 pm [vite] Internal server error: Failed to resolve import "zod" from "src/api/client.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/client.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  import * as c from "./contracts";
+  3  |  export class ApiError extends Error {
+      at TransformPluginContext._formatLog (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26593:18)
+      at async file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26663:30
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26629:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20157:26)
+      at async viteTransformMiddleware (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20377:20)
+4:08:20 pm [vite] (client) Pre-transform error: Failed to resolve import "zod" from "src/api/contracts.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/contracts.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  const num = z.number().finite().nullable();
+  3  |  const text = z.string().nullable();
+4:10:19 pm [vite] Internal server error: Failed to resolve import "zod" from "src/api/client.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/client.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  import * as c from "./contracts";
+  3  |  export class ApiError extends Error {
+      at TransformPluginContext._formatLog (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26593:18)
+      at async file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26663:30
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26629:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20157:26)
+      at async viteTransformMiddleware (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20377:20)
+4:10:19 pm [vite] (client) Pre-transform error: Failed to resolve import "zod" from "src/api/contracts.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/contracts.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  const num = z.number().finite().nullable();
+  3  |  const text = z.string().nullable();
+4:27:51 pm [vite] Internal server error: Failed to resolve import "zod" from "src/api/client.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/client.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  import * as c from "./contracts";
+  3  |  export class ApiError extends Error {
+      at TransformPluginContext._formatLog (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8766:39)
+      at TransformPluginContext.error (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8763:14)
+      at normalizeUrl (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26593:18)
+      at async file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26663:30
+      at async Promise.all (index 0)
+      at async TransformPluginContext.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:26629:4)
+      at async EnvironmentPluginContainer.transform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:8545:14)
+      at async loadAndTransform (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20157:26)
+      at async viteTransformMiddleware (file:///C:/Transformer-DigitalTwin/frontend/node_modules/vite/dist/node/chunks/node.js:20377:20)
+4:27:51 pm [vite] (client) Pre-transform error: Failed to resolve import "zod" from "src/api/contracts.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: C:/Transformer-DigitalTwin/frontend/src/api/contracts.ts:1:18
+  1  |  import { z } from "zod";
+     |                     ^
+  2  |  const num = z.number().finite().nullable();
+  3  |  const text = z.string().nullable();

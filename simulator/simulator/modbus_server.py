@@ -84,12 +84,23 @@ class SimulationServer:
             now = time.monotonic()
             for asset, deadline in deadlines.items():
                 if now >= deadline:
-                    record = self.scheduler.advance(asset)
-                    self.audit(asset, record)
-                    self.snapshots[asset] = record
-                    self.blocks[asset].install(encode(record, self.scheduler.assets[asset].unit_id, self.spec))
+                    self.advance_asset(asset)
                     # If delayed, catch up incrementally, preserving each event-time step.
                     deadlines[asset] += self.scheduler.assets[asset].generator.interval_s
+
+    def advance_asset(self, asset):
+        try:
+            record = self.scheduler.advance(asset)
+            self.audit(asset, record)
+            self.blocks[asset].install(encode(record, self.scheduler.assets[asset].unit_id, self.spec))
+            self.snapshots[asset] = record
+            return record
+        except Exception as exc:
+            # The bridge will observe an unchanged/stale snapshot for this
+            # asset. Other independent clocks and register blocks keep moving.
+            print(json.dumps({'synthetic_asset_unavailable': asset,
+                              'error_type': type(exc).__name__}), flush=True)
+            return None
 
     async def run(self):
         self.server = ModbusTcpServer(self.context, address=(self.host, self.port), ignore_missing_slaves=False)

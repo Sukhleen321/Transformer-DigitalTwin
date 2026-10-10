@@ -1,0 +1,12 @@
+{
+  "fleet_file": "operational-fleet.json",
+  "host": "0.0.0.0",
+  "port": 1502,
+  "container_network": true,
+  "registry_url": "http://backend:8000",
+  "signal_profile": {
+    "version": "CORRELATED_DEMO_V1",
+    "load_period_seconds": 120,
+    "noise_time_constant_seconds": 30
+  }
+}

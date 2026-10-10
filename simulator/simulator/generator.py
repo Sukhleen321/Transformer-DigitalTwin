@@ -32,7 +32,7 @@ def thermal_step(previous, target, elapsed_seconds, time_constant_seconds=1200):
 
 
 class SyntheticGenerator:
-    def __init__(self, config=None, seed=42, interval_s=60):
+    def __init__(self, config=None, seed=42, interval_s=60, signal_profile=None, phase=0):
         if not math.isfinite(interval_s) or interval_s <= 0:
             raise ValueError("positive cadence required")
         cfg = (config or TransformerConfig()).model_copy(deep=True)
@@ -49,6 +49,24 @@ class SyntheticGenerator:
         self._step = 0
         self._last_time = None
         self._last_power = None
+        self.signal_profile = signal_profile
+        self.phase = phase
+        self._noise = {}
+        self._epoch = None
+        if signal_profile is not None and (
+            set(signal_profile) != {"version", "load_period_seconds", "noise_time_constant_seconds"}
+            or signal_profile["version"] != "CORRELATED_DEMO_V1"
+            or any(type(signal_profile[k]) not in (float, int)
+                   or not math.isfinite(signal_profile[k]) or signal_profile[k] <= 0
+                   for k in ("load_period_seconds", "noise_time_constant_seconds"))
+        ):
+            raise ValueError("Explicit supported synthetic signal profile required")
+
+    def filtered_noise(self, channel, sigma, elapsed):
+        rho = math.exp(-elapsed / self.signal_profile["noise_time_constant_seconds"])
+        value = rho * self._noise.get(channel, 0) + math.sqrt(1 - rho * rho) * self.rng.normal(0, sigma)
+        self._noise[channel] = float(np.clip(value, -3 * sigma, 3 * sigma))
+        return self._noise[channel]
 
     def iter_records(self, start, count=None, scenario="HEALTHY"):
         if count is not None and count < 0:
@@ -70,14 +88,21 @@ class SyntheticGenerator:
         if self._last_time is not None and elapsed <= 0:
             raise ValueError("simulation event time must advance")
         rng, cfg = self.rng, self.config
+        if self._epoch is None:
+            self._epoch = ts
+        noise = (lambda channel, sigma: self.filtered_noise(channel, sigma, elapsed)) if self.signal_profile else (lambda channel, sigma: rng.normal(0, sigma))
         hour = ts.hour + ts.minute / 60 + ts.second / 3600
-        ambient = 32 + 6 * math.sin(math.pi * (hour - 6) / 12) + rng.normal(0, .5)
-        load = float(np.clip(.55 + .25 * math.sin(math.pi * (hour - 8) / 12) + rng.normal(0, .05), .15, 1))
+        ambient = 32 + 6 * math.sin(math.pi * (hour - 6) / 12) + noise('ambient', .5)
+        load_angle = (
+            2 * math.pi * (ts - self._epoch).total_seconds() / self.signal_profile['load_period_seconds'] + self.phase
+            if self.signal_profile else math.pi * (hour - 8) / 12
+        )
+        load = float(np.clip(.55 + .25 * math.sin(load_angle) + noise('load', .05), .15, 1))
         values = {}
         for phase in (1, 2, 3):
-            values[f"current_l{phase}"] = round(float(load * cfg.rated_current_a * (1 + rng.normal(0, .01))), 2)
-            values[f"phase_voltage_l{phase}"] = round(float(cfg.rated_voltage_lv / math.sqrt(3) * (1 + rng.normal(0, .005))), 2)
-            values[f"power_factor_l{phase}"] = round(float(np.clip(.92 + rng.normal(0, .02), .8, 1)), 4)
+            values[f"current_l{phase}"] = round(float(load * cfg.rated_current_a * (1 + noise(f'current{phase}', .01))), 2)
+            values[f"phase_voltage_l{phase}"] = round(float(cfg.rated_voltage_lv / math.sqrt(3) * (1 + noise(f'voltage{phase}', .005))), 2)
+            values[f"power_factor_l{phase}"] = round(float(np.clip(.92 + noise(f'pf{phase}', .02), .8, 1)), 4)
         previous_oil = self._oil_temp
         record = TransformerRecord(transformer_id=cfg.transformer_id, timestamp=ts,
             schema_version="1.1.0", source_name="fictional-simulator",
@@ -85,7 +110,7 @@ class SyntheticGenerator:
             acquisition=acquisition(sequence=self._step, interval=self.interval_s),
             neutral_current=abs(values["current_l1"] - values["current_l2"]) * .2,
             oil_temperature=previous_oil, winding_temperature=None,
-            ambient_temperature=round(float(ambient), 1), oil_level=round(float(85 + rng.normal(0, .3)), 1),
+            ambient_temperature=round(float(ambient), 1), oil_level=round(float(85 + noise('oil_level', .3)), 1),
             oil_temp_alarm=0, oil_temp_trip=0, magnetic_oil_gauge_alarm=0, **values)
         record, _ = self.injector.inject(record, scenario, elapsed_s=elapsed)
         coherent_power(record)

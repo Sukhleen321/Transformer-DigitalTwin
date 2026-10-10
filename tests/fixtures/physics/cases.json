@@ -1,0 +1,1167 @@
+{
+  "notice": "Structural contract fixtures only. LIVE/VERIFIED labels and all READY values are hypothetical, not sensor evidence, computed temperatures, verified equations, or FEM verification. No solver is exercised.",
+  "conversion_vectors": [
+    {
+      "rule": "absolute_deg_c_to_k",
+      "source": "0",
+      "expected": "273.15"
+    },
+    {
+      "rule": "absolute_deg_c_to_k",
+      "source": "-273.15",
+      "expected": "0"
+    },
+    {
+      "rule": "absolute_deg_c_to_k",
+      "source": "100",
+      "expected": "373.15"
+    },
+    {
+      "rule": "difference_deg_c_to_k",
+      "source": "0",
+      "expected": "0"
+    },
+    {
+      "rule": "difference_deg_c_to_k",
+      "source": "25",
+      "expected": "25"
+    },
+    {
+      "rule": "difference_deg_c_to_k",
+      "source": "-5",
+      "expected": "-5"
+    },
+    {
+      "rule": "kw_to_w",
+      "source": "2.5",
+      "expected": "2500"
+    },
+    {
+      "rule": "kw_to_w",
+      "source": "-1.25",
+      "expected": "-1250"
+    },
+    {
+      "rule": "kw_to_w",
+      "source": "0",
+      "expected": "0"
+    },
+    {
+      "rule": "kva_to_va",
+      "source": "30",
+      "expected": "30000"
+    },
+    {
+      "rule": "kvar_to_var",
+      "source": "-2",
+      "expected": "-2000"
+    },
+    {
+      "rule": "kwh_to_j",
+      "source": "1",
+      "expected": "3600000"
+    },
+    {
+      "rule": "kwh_to_j",
+      "source": "0.5",
+      "expected": "1800000"
+    },
+    {
+      "rule": "hours_to_seconds",
+      "source": "0.25",
+      "expected": "900"
+    },
+    {
+      "rule": "hours_to_seconds",
+      "source": "1",
+      "expected": "3600"
+    },
+    {
+      "rule": "percent_to_one",
+      "source": "100",
+      "expected": "1"
+    },
+    {
+      "rule": "percent_to_one",
+      "source": "0",
+      "expected": "0"
+    },
+    {
+      "rule": "mm_to_m",
+      "source": "250",
+      "expected": "0.25"
+    }
+  ],
+  "base_envelope": {
+    "physics_contract_version": "1.0.0",
+    "transformer_id": "contract-fixture-only",
+    "timestamp": null,
+    "evaluated_at": "2026-10-10T00:00:00Z",
+    "context": "OPERATIONAL",
+    "lineage": {
+      "source_kind": "UNKNOWN",
+      "origin_kind": "UNKNOWN",
+      "input_verification": "UNKNOWN",
+      "acquisition_reference": null,
+      "origin_transformer_id": null,
+      "replay_run_id": null,
+      "evidence_references": []
+    },
+    "versions": {
+      "model_version": null,
+      "parameter_version": null,
+      "configuration_version": null,
+      "preprocessing_version": null,
+      "equation_registry_version": null
+    }
+  },
+  "component_defaults": {
+    "value": null,
+    "status": "INVALID_CONFIGURATION",
+    "reasons": [
+      {
+        "code": "MODEL_NOT_CONFIGURED",
+        "message": "Contract fixture only; no real equipment evidence.",
+        "paths": [
+          "model_parameters"
+        ]
+      }
+    ],
+    "missing_inputs": [
+      "model_parameters"
+    ],
+    "warnings": [],
+    "assumptions": [],
+    "coverage": {
+      "start": null,
+      "end": null,
+      "covered_seconds": null,
+      "expected_seconds": null,
+      "fraction": null,
+      "gap_count": 0,
+      "missing_fields": []
+    },
+    "provenance": {
+      "model_id": null,
+      "equation_ids": [],
+      "input_paths": [],
+      "evidence_references": [],
+      "case_id": null,
+      "comparison_id": null,
+      "numerical_verification_reference": null,
+      "mesh_convergence_reference": null
+    }
+  },
+  "components": {
+    "measured_oil_temperature": {
+      "unit": "DEG_C",
+      "result_kind": "MEASURED_TELEMETRY",
+      "status": "INSUFFICIENT_DATA",
+      "reasons": [
+        {
+          "code": "MISSING_OBSERVATION",
+          "message": "Contract fixture only; no real equipment evidence.",
+          "paths": [
+            "observed.oil_temperature"
+          ]
+        }
+      ],
+      "missing_inputs": [
+        "observed.oil_temperature"
+      ]
+    },
+    "top_oil_temperature": {
+      "unit": "DEG_C",
+      "result_kind": "CALCULATED_ESTIMATE"
+    },
+    "hot_spot_temperature": {
+      "unit": "DEG_C",
+      "result_kind": "CALCULATED_ESTIMATE"
+    },
+    "top_oil_rise": {
+      "unit": "K",
+      "result_kind": "CALCULATED_ESTIMATE"
+    },
+    "winding_hot_spot_gradient": {
+      "unit": "K",
+      "result_kind": "CALCULATED_ESTIMATE"
+    },
+    "total_loss": {
+      "unit": "W",
+      "result_kind": "CALCULATED_ESTIMATE"
+    },
+    "ageing_acceleration_factor": {
+      "unit": "1",
+      "result_kind": "CALCULATED_ESTIMATE"
+    },
+    "equivalent_ageing_hours": {
+      "unit": "h",
+      "result_kind": "CALCULATED_ESTIMATE"
+    },
+    "fem_hot_spot_temperature": {
+      "unit": "DEG_C",
+      "result_kind": "SIMULATED_REFERENCE"
+    },
+    "hot_spot_difference": {
+      "unit": "K",
+      "result_kind": "CALCULATED_ESTIMATE"
+    }
+  },
+  "positive_cases": [
+    {
+      "name": "unavailable",
+      "changes": []
+    },
+    {
+      "name": "partial-measured",
+      "changes": [
+        {
+          "path": [
+            "timestamp"
+          ],
+          "value": "2026-10-10T00:00:00Z"
+        },
+        {
+          "path": [
+            "lineage",
+            "source_kind"
+          ],
+          "value": "LIVE"
+        },
+        {
+          "path": [
+            "lineage",
+            "origin_kind"
+          ],
+          "value": "LIVE"
+        },
+        {
+          "path": [
+            "lineage",
+            "input_verification"
+          ],
+          "value": "VERIFIED"
+        },
+        {
+          "path": [
+            "lineage",
+            "acquisition_reference"
+          ],
+          "value": "fixture-only-observation"
+        },
+        {
+          "path": [
+            "lineage",
+            "evidence_references"
+          ],
+          "value": [
+            "fixture-only-source"
+          ]
+        },
+        {
+          "path": [
+            "versions",
+            "preprocessing_version"
+          ],
+          "value": "fixture-only-adapter"
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "value"
+          ],
+          "value": 40
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "status"
+          ],
+          "value": "READY"
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "reasons"
+          ],
+          "value": []
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "missing_inputs"
+          ],
+          "value": []
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "coverage",
+            "start"
+          ],
+          "value": "2026-10-10T00:00:00Z"
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "coverage",
+            "end"
+          ],
+          "value": "2026-10-10T00:00:00Z"
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "coverage",
+            "covered_seconds"
+          ],
+          "value": 0
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "coverage",
+            "expected_seconds"
+          ],
+          "value": 0
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "provenance",
+            "input_paths"
+          ],
+          "value": [
+            "observed.oil_temperature"
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "provenance",
+            "evidence_references"
+          ],
+          "value": [
+            "fixture-only/not-real-evidence"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "initializing",
+      "changes": [
+        {
+          "path": [
+            "context"
+          ],
+          "value": "CONTROLLED_SIMULATION"
+        },
+        {
+          "path": [
+            "lineage",
+            "source_kind"
+          ],
+          "value": "SIMULATED"
+        },
+        {
+          "path": [
+            "lineage",
+            "origin_kind"
+          ],
+          "value": "SIMULATED"
+        },
+        {
+          "path": [
+            "lineage",
+            "input_verification"
+          ],
+          "value": "SYNTHETIC"
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "status"
+          ],
+          "value": "INITIALIZING"
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "reasons"
+          ],
+          "value": [
+            {
+              "code": "COLD_START",
+              "message": "Illustrative initialization state.",
+              "paths": []
+            }
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "missing_inputs"
+          ],
+          "value": []
+        }
+      ]
+    },
+    {
+      "name": "simulated-comparison-without-ageing",
+      "changes": [
+        {
+          "path": [
+            "timestamp"
+          ],
+          "value": "2026-10-10T00:00:00Z"
+        },
+        {
+          "path": [
+            "context"
+          ],
+          "value": "CONTROLLED_SIMULATION"
+        },
+        {
+          "path": [
+            "lineage",
+            "source_kind"
+          ],
+          "value": "SIMULATED"
+        },
+        {
+          "path": [
+            "lineage",
+            "origin_kind"
+          ],
+          "value": "SIMULATED"
+        },
+        {
+          "path": [
+            "lineage",
+            "input_verification"
+          ],
+          "value": "SYNTHETIC"
+        },
+        {
+          "path": [
+            "lineage",
+            "acquisition_reference"
+          ],
+          "value": "fixture-only-snapshot"
+        },
+        {
+          "path": [
+            "lineage",
+            "evidence_references"
+          ],
+          "value": [
+            "fixture-only-case"
+          ]
+        },
+        {
+          "path": [
+            "versions",
+            "model_version"
+          ],
+          "value": "fixture-only-v1"
+        },
+        {
+          "path": [
+            "versions",
+            "parameter_version"
+          ],
+          "value": "fixture-only-v1"
+        },
+        {
+          "path": [
+            "versions",
+            "configuration_version"
+          ],
+          "value": "fixture-only-v1"
+        },
+        {
+          "path": [
+            "versions",
+            "preprocessing_version"
+          ],
+          "value": "fixture-only-v1"
+        },
+        {
+          "path": [
+            "versions",
+            "equation_registry_version"
+          ],
+          "value": "fixture-only-v1"
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "reasons"
+          ],
+          "value": [
+            {
+              "code": "SYNTHETIC_NOT_MEASURED",
+              "message": "Synthetic input is not a real measurement.",
+              "paths": [
+                "observed.oil_temperature"
+              ]
+            }
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "value"
+          ],
+          "value": 82
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "status"
+          ],
+          "value": "READY"
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "reasons"
+          ],
+          "value": []
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "missing_inputs"
+          ],
+          "value": []
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "coverage",
+            "start"
+          ],
+          "value": "2026-10-10T00:00:00Z"
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "coverage",
+            "end"
+          ],
+          "value": "2026-10-10T00:00:00Z"
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "coverage",
+            "covered_seconds"
+          ],
+          "value": 0
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "coverage",
+            "expected_seconds"
+          ],
+          "value": 0
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "provenance",
+            "model_id"
+          ],
+          "value": "fixture-only-model"
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "provenance",
+            "equation_ids"
+          ],
+          "value": [
+            "fixture-only-equation"
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "provenance",
+            "input_paths"
+          ],
+          "value": [
+            "observed.oil_temperature"
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "provenance",
+            "evidence_references"
+          ],
+          "value": [
+            "fixture-only/not-real-evidence"
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "provenance",
+            "case_id"
+          ],
+          "value": "fixture-only-case"
+        },
+        {
+          "path": [
+            "components",
+            "equivalent_ageing_hours",
+            "status"
+          ],
+          "value": "INSUFFICIENT_DATA"
+        },
+        {
+          "path": [
+            "components",
+            "equivalent_ageing_hours",
+            "reasons"
+          ],
+          "value": [
+            {
+              "code": "INSUFFICIENT_HISTORY",
+              "message": "No supported ageing trajectory.",
+              "paths": [
+                "history.hot_spot_temperature"
+              ]
+            }
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "equivalent_ageing_hours",
+            "missing_inputs"
+          ],
+          "value": [
+            "history.hot_spot_temperature"
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "fem_hot_spot_temperature",
+            "value"
+          ],
+          "value": 80
+        },
+        {
+          "path": [
+            "components",
+            "fem_hot_spot_temperature",
+            "status"
+          ],
+          "value": "READY"
+        },
+        {
+          "path": [
+            "components",
+            "fem_hot_spot_temperature",
+            "reasons"
+          ],
+          "value": []
+        },
+        {
+          "path": [
+            "components",
+            "fem_hot_spot_temperature",
+            "missing_inputs"
+          ],
+          "value": []
+        },
+        {
+          "path": [
+            "components",
+            "fem_hot_spot_temperature",
+            "coverage",
+            "start"
+          ],
+          "value": "2026-10-10T00:00:00Z"
+        },
+        {
+          "path": [
+            "components",
+            "fem_hot_spot_temperature",
+            "coverage",
+            "end"
+          ],
+          "value": "2026-10-10T00:00:00Z"
+        },
+        {
+          "path": [
+            "components",
+            "fem_hot_spot_temperature",
+            "coverage",
+            "covered_seconds"
+          ],
+          "value": 0
+        },
+        {
+          "path": [
+            "components",
+            "fem_hot_spot_temperature",
+            "coverage",
+            "expected_seconds"
+          ],
+          "value": 0
+        },
+        {
+          "path": [
+            "components",
+            "fem_hot_spot_temperature",
+            "provenance",
+            "model_id"
+          ],
+          "value": "fixture-only-model"
+        },
+        {
+          "path": [
+            "components",
+            "fem_hot_spot_temperature",
+            "provenance",
+            "equation_ids"
+          ],
+          "value": [
+            "fixture-only-equation"
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "fem_hot_spot_temperature",
+            "provenance",
+            "input_paths"
+          ],
+          "value": [
+            "observed.oil_temperature"
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "fem_hot_spot_temperature",
+            "provenance",
+            "evidence_references"
+          ],
+          "value": [
+            "fixture-only/not-real-evidence"
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "fem_hot_spot_temperature",
+            "provenance",
+            "case_id"
+          ],
+          "value": "fixture-only-case"
+        },
+        {
+          "path": [
+            "components",
+            "fem_hot_spot_temperature",
+            "provenance",
+            "numerical_verification_reference"
+          ],
+          "value": "fixture-only-verification"
+        },
+        {
+          "path": [
+            "components",
+            "fem_hot_spot_temperature",
+            "provenance",
+            "mesh_convergence_reference"
+          ],
+          "value": "fixture-only-mesh"
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_difference",
+            "value"
+          ],
+          "value": 2
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_difference",
+            "status"
+          ],
+          "value": "READY"
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_difference",
+            "reasons"
+          ],
+          "value": []
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_difference",
+            "missing_inputs"
+          ],
+          "value": []
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_difference",
+            "coverage",
+            "start"
+          ],
+          "value": "2026-10-10T00:00:00Z"
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_difference",
+            "coverage",
+            "end"
+          ],
+          "value": "2026-10-10T00:00:00Z"
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_difference",
+            "coverage",
+            "covered_seconds"
+          ],
+          "value": 0
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_difference",
+            "coverage",
+            "expected_seconds"
+          ],
+          "value": 0
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_difference",
+            "provenance",
+            "model_id"
+          ],
+          "value": "fixture-only-model"
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_difference",
+            "provenance",
+            "equation_ids"
+          ],
+          "value": [
+            "fixture-only-equation"
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_difference",
+            "provenance",
+            "input_paths"
+          ],
+          "value": [
+            "observed.oil_temperature"
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_difference",
+            "provenance",
+            "evidence_references"
+          ],
+          "value": [
+            "fixture-only/not-real-evidence"
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_difference",
+            "provenance",
+            "case_id"
+          ],
+          "value": "fixture-only-case"
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_difference",
+            "provenance",
+            "comparison_id"
+          ],
+          "value": "fixture-only-comparison"
+        }
+      ]
+    },
+    {
+      "name": "model-error",
+      "changes": [
+        {
+          "path": [
+            "context"
+          ],
+          "value": "CONTROLLED_SIMULATION"
+        },
+        {
+          "path": [
+            "lineage",
+            "source_kind"
+          ],
+          "value": "SIMULATED"
+        },
+        {
+          "path": [
+            "lineage",
+            "origin_kind"
+          ],
+          "value": "SIMULATED"
+        },
+        {
+          "path": [
+            "lineage",
+            "input_verification"
+          ],
+          "value": "SYNTHETIC"
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "status"
+          ],
+          "value": "MODEL_ERROR"
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "reasons"
+          ],
+          "value": [
+            {
+              "code": "NUMERICAL_FAILURE",
+              "message": "Illustrative failure; no calculation performed.",
+              "paths": []
+            }
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "hot_spot_temperature",
+            "missing_inputs"
+          ],
+          "value": []
+        }
+      ]
+    },
+    {
+      "name": "replayed-measured",
+      "changes": [
+        {
+          "path": [
+            "timestamp"
+          ],
+          "value": "2026-10-10T00:00:00Z"
+        },
+        {
+          "path": [
+            "lineage",
+            "source_kind"
+          ],
+          "value": "REPLAYED"
+        },
+        {
+          "path": [
+            "lineage",
+            "origin_kind"
+          ],
+          "value": "LIVE"
+        },
+        {
+          "path": [
+            "lineage",
+            "input_verification"
+          ],
+          "value": "VERIFIED"
+        },
+        {
+          "path": [
+            "lineage",
+            "acquisition_reference"
+          ],
+          "value": "fixture-only-observation"
+        },
+        {
+          "path": [
+            "lineage",
+            "origin_transformer_id"
+          ],
+          "value": "fixture-origin"
+        },
+        {
+          "path": [
+            "lineage",
+            "replay_run_id"
+          ],
+          "value": "fixture-run"
+        },
+        {
+          "path": [
+            "lineage",
+            "evidence_references"
+          ],
+          "value": [
+            "fixture-only-source"
+          ]
+        },
+        {
+          "path": [
+            "versions",
+            "preprocessing_version"
+          ],
+          "value": "fixture-only-adapter"
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "value"
+          ],
+          "value": 40
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "status"
+          ],
+          "value": "READY"
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "reasons"
+          ],
+          "value": []
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "missing_inputs"
+          ],
+          "value": []
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "coverage",
+            "start"
+          ],
+          "value": "2026-10-10T00:00:00Z"
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "coverage",
+            "end"
+          ],
+          "value": "2026-10-10T00:00:00Z"
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "coverage",
+            "covered_seconds"
+          ],
+          "value": 0
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "coverage",
+            "expected_seconds"
+          ],
+          "value": 0
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "provenance",
+            "input_paths"
+          ],
+          "value": [
+            "observed.oil_temperature"
+          ]
+        },
+        {
+          "path": [
+            "components",
+            "measured_oil_temperature",
+            "provenance",
+            "evidence_references"
+          ],
+          "value": [
+            "fixture-only/not-real-evidence"
+          ]
+        }
+      ]
+    }
+  ]
+}

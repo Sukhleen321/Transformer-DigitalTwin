@@ -1,0 +1,25 @@
+{
+  "command": ".venv/Scripts/python.exe backend/scripts/check_ten_transformer_integration.py",
+  "files": [
+    "backend/tests/test_ten_transformer_demo.py",
+    "backend/tests/test_ten_transformer_persistence.py",
+    "backend/tests/test_physics_demo_compose.py",
+    "backend/tests/test_physics_demo_config.py",
+    "backend/tests/test_live_physics_demo.py",
+    "backend/tests/test_physics_integration.py",
+    "backend/tests/test_physics_codec.py",
+    "backend/tests/mqtt/test_message_handler.py",
+    "backend/tests/mqtt/test_config.py",
+    "backend/tests/mqtt/test_consumer.py",
+    "ml/tests/test_live_physics_demo.py",
+    "simulator/tests/test_physics_demo_stream.py",
+    "simulator/tests/test_operational_fleet.py",
+    "simulator/tests/test_generation_h03.py",
+    "simulator/tests/test_modbus_h03.py",
+    "simulator/tests/test_delivery_h03.py"
+  ],
+  "exit_code": 0,
+  "ephemeral_test_container": "fullstack-check-7fe8bc6d57d64826a5e912b5bf181cad",
+  "database_port": 57728,
+  "application_stack_started": false
+}

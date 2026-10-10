@@ -1,0 +1,117 @@
+# Standalone opt-in overlay environment; do NOT combine with retained Compose.
+# The launcher supplies a unique project, image tag, credentials and database.
+services:
+  db:
+    profiles: [physics-demo]
+    image: postgres:16
+    environment:
+      POSTGRES_USER: physics_demo
+      POSTGRES_PASSWORD: ${PHYSICS_DEMO_DB_PASSWORD:?Use Start-TenTransformerDemo.ps1}
+      POSTGRES_DB: ${PHYSICS_DEMO_DB_NAME:?Use Start-TenTransformerDemo.ps1}
+    tmpfs: [/var/lib/postgresql/data]
+    ports: ["127.0.0.1:${PHYSICS_DEMO_DB_PORT:-55434}:5432"]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  mqtt:
+    profiles: [physics-demo]
+    image: eclipse-mosquitto:2
+    volumes: ["./backend/docker/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro"]
+    tmpfs: ["/mosquitto/data:mode=1777"]
+    ports: ["127.0.0.1:${PHYSICS_DEMO_MQTT_PORT:-51886}:1883"]
+    healthcheck:
+      test: [CMD, mosquitto_pub, -h, 127.0.0.1, -t, demo/health, -m, ok]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  backend:
+    profiles: [physics-demo]
+    image: transformer-physics-demo-backend:${PHYSICS_DEMO_TAG:?Use launcher}
+    build: {context: ., dockerfile: backend/Dockerfile}
+    environment:
+      DATABASE_URL: postgresql+psycopg://physics_demo:${PHYSICS_DEMO_DB_PASSWORD:?Use launcher}@db:5432/${PHYSICS_DEMO_DB_NAME:?Use launcher}
+      ENV: local-demo
+      PHYSICS_ENABLED: "true"
+      ENABLE_PHYSICS_DEMO: "true"
+      PHYSICS_DEMO_INPUT_MODE: accepted-telemetry
+      OPERATIONAL_FLEET_FILE: /config/operational-fleet.json
+      ANALYTICS_POLICY_FILE: /config/analytics-policy.json
+      MQTT_ENABLED: "true"
+      MQTT_HOST: mqtt
+      MQTT_PORT: "1883"
+      MQTT_CLIENT_ID: physics-demo-backend
+      MQTT_TOPIC: transformer/+/telemetry
+      MQTT_QOS: "1"
+      ML_BACKEND: python
+      ML_PYTHON_ENTRYPOINT: ml.pipeline:analyze
+      ML_RUNTIME_MODE: DEMO_UNVERIFIED_CONFIG
+      ML_ARTIFACT_DIR: /artifacts
+      WEB_CONCURRENCY: "1"
+      SCHEMA_VERSION: 1.1.0
+      DEMO_RESET_ENABLED: "false"
+      CORS_ORIGINS: http://127.0.0.1:${PHYSICS_DEMO_FRONTEND_PORT:-5177}
+    volumes:
+      - ./simulator/config:/config:ro
+      - ./simulator/config/artifacts:/artifacts:ro
+    ports: ["127.0.0.1:${PHYSICS_DEMO_HTTP_PORT:-8002}:8000"]
+    depends_on:
+      db: {condition: service_healthy}
+      mqtt: {condition: service_healthy}
+    init: true
+    stop_grace_period: 30s
+  frontend:
+    profiles: [physics-demo]
+    image: transformer-physics-demo-frontend:${PHYSICS_DEMO_TAG:?Use launcher}
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        VITE_API_BASE_URL: /
+        VITE_LIVE_PHYSICS_DEMO_ENABLED: "true"
+        VITE_LIVE_PHYSICS_POLL_INTERVAL_MS: "5000"
+    volumes: ["./frontend/docker/physics-demo.conf:/etc/nginx/conf.d/default.conf:ro"]
+    ports: ["127.0.0.1:${PHYSICS_DEMO_FRONTEND_PORT:-5177}:80"]
+    healthcheck:
+      test: [CMD, wget, -q, --spider, http://127.0.0.1/]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    depends_on:
+      backend: {condition: service_healthy}
+  modbus-simulator:
+    profiles: [physics-demo]
+    image: transformer-physics-demo-simulator:${PHYSICS_DEMO_TAG:?Use launcher}
+    build:
+      context: .
+      dockerfile: simulator/Dockerfile
+      additional_contexts: {ml_runtime: "service:backend"}
+    command: [modbus-server, --config, /config/physics-demo-server.json]
+    volumes: ["./simulator/config:/config:ro"]
+    ports: ["127.0.0.1:${PHYSICS_DEMO_MODBUS_PORT:-1503}:1502"]
+    healthcheck:
+      test: [CMD, python, -c, "import socket; socket.create_connection(('127.0.0.1',1502),2).close()"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    depends_on:
+      backend: {condition: service_healthy}
+    init: true
+    stop_grace_period: 15s
+  modbus-bridge:
+    profiles: [physics-demo]
+    image: transformer-physics-demo-bridge:${PHYSICS_DEMO_TAG:?Use launcher}
+    build:
+      context: .
+      dockerfile: simulator/Dockerfile
+      additional_contexts: {ml_runtime: "service:backend"}
+    command: [modbus-bridge, --config, /config/operational-bridge.json]
+    volumes: ["./simulator/config:/config:ro"]
+    tmpfs: ["/spool:mode=1777"]
+    depends_on:
+      backend: {condition: service_healthy}
+      mqtt: {condition: service_healthy}
+      modbus-simulator: {condition: service_healthy}
+    init: true
+    stop_grace_period: 30s

@@ -1,0 +1,507 @@
+{
+  "physics_contract_version": "1.0.0",
+  "transformer_id": "validation-frontend",
+  "timestamp": "2026-10-10T00:01:40Z",
+  "evaluated_at": "2026-10-10T00:01:40Z",
+  "context": "CONTROLLED_SIMULATION",
+  "lineage": {
+    "source_kind": "SIMULATED",
+    "origin_kind": "SIMULATED",
+    "input_verification": "SYNTHETIC",
+    "acquisition_reference": "PHASE4_INDEPENDENT_VALIDATION_V1/frontend/event/100",
+    "origin_transformer_id": null,
+    "replay_run_id": null,
+    "evidence_references": [
+      "PHASE4_INDEPENDENT_VALIDATION_V1/frontend"
+    ]
+  },
+  "versions": {
+    "model_version": "1.0.0",
+    "parameter_version": "PHASE4_INDEPENDENT_VALIDATION_V1/frontend/params-v1",
+    "configuration_version": "PHASE4_INDEPENDENT_VALIDATION_V1/frontend/config-v1",
+    "preprocessing_version": "PHASE4_INDEPENDENT_VALIDATION_V1/frontend/map-v1",
+    "equation_registry_version": "physics-equations-1.0.0"
+  },
+  "components": {
+    "measured_oil_temperature": {
+      "value": null,
+      "unit": "DEG_C",
+      "result_kind": "MEASURED_TELEMETRY",
+      "status": "INSUFFICIENT_DATA",
+      "reasons": [
+        {
+          "code": "SYNTHETIC_NOT_MEASURED",
+          "message": "Synthetic input is not measured equipment temperature.",
+          "paths": [
+            "observed.oil_temperature"
+          ]
+        }
+      ],
+      "missing_inputs": [
+        "observed.oil_temperature"
+      ],
+      "warnings": [],
+      "assumptions": [],
+      "coverage": {
+        "start": null,
+        "end": null,
+        "covered_seconds": null,
+        "expected_seconds": null,
+        "fraction": null,
+        "gap_count": 0,
+        "missing_fields": [
+          "observed.oil_temperature"
+        ]
+      },
+      "provenance": {
+        "model_id": null,
+        "equation_ids": [],
+        "input_paths": [],
+        "evidence_references": [],
+        "case_id": null,
+        "comparison_id": null,
+        "numerical_verification_reference": null,
+        "mesh_convergence_reference": null
+      }
+    },
+    "top_oil_temperature": {
+      "value": 56.8499999999783,
+      "unit": "DEG_C",
+      "result_kind": "CALCULATED_ESTIMATE",
+      "status": "READY",
+      "reasons": [],
+      "missing_inputs": [],
+      "warnings": [
+        {
+          "code": "SIMPLIFIED_NODE_PROXY",
+          "message": "Idealized controlled-case node estimate; not a real winding maximum or standards model.",
+          "paths": []
+        }
+      ],
+      "assumptions": [
+        {
+          "message": "Uniform nodes, constant positive R/C and explicit previous-sample heat/boundary hold.",
+          "reference": "PROJECT_TWO_NODE_RC_V1"
+        }
+      ],
+      "coverage": {
+        "start": "2026-10-10T00:00:00Z",
+        "end": "2026-10-10T00:01:40Z",
+        "covered_seconds": 100.0,
+        "expected_seconds": 100.0,
+        "fraction": 1.0,
+        "gap_count": 0,
+        "missing_fields": []
+      },
+      "provenance": {
+        "model_id": "PROJECT_TWO_NODE_RC_V1",
+        "equation_ids": [
+          "PROJECT_TWO_NODE_RC_V1"
+        ],
+        "input_paths": [
+          "model_parameters.oil_thermal_resistance",
+          "model_parameters.winding_thermal_resistance",
+          "model_parameters.oil_thermal_capacitance",
+          "model_parameters.winding_thermal_capacitance",
+          "model_parameters.minimum_temperature",
+          "model_parameters.maximum_temperature",
+          "environment.ambient_temperature",
+          "simulation.oil_heat_input",
+          "simulation.winding_heat_input"
+        ],
+        "evidence_references": [
+          "PHASE4_INDEPENDENT_VALIDATION_V1/frontend"
+        ],
+        "case_id": "PHASE4_INDEPENDENT_VALIDATION_V1/frontend",
+        "comparison_id": null,
+        "numerical_verification_reference": null,
+        "mesh_convergence_reference": null
+      }
+    },
+    "hot_spot_temperature": {
+      "value": 76.8499999999771,
+      "unit": "DEG_C",
+      "result_kind": "CALCULATED_ESTIMATE",
+      "status": "READY",
+      "reasons": [],
+      "missing_inputs": [],
+      "warnings": [
+        {
+          "code": "SIMPLIFIED_NODE_PROXY",
+          "message": "Idealized controlled-case node estimate; not a real winding maximum or standards model.",
+          "paths": []
+        }
+      ],
+      "assumptions": [
+        {
+          "message": "Uniform nodes, constant positive R/C and explicit previous-sample heat/boundary hold.",
+          "reference": "PROJECT_TWO_NODE_RC_V1"
+        }
+      ],
+      "coverage": {
+        "start": "2026-10-10T00:00:00Z",
+        "end": "2026-10-10T00:01:40Z",
+        "covered_seconds": 100.0,
+        "expected_seconds": 100.0,
+        "fraction": 1.0,
+        "gap_count": 0,
+        "missing_fields": []
+      },
+      "provenance": {
+        "model_id": "PROJECT_TWO_NODE_RC_V1",
+        "equation_ids": [
+          "PROJECT_TWO_NODE_RC_V1"
+        ],
+        "input_paths": [
+          "model_parameters.oil_thermal_resistance",
+          "model_parameters.winding_thermal_resistance",
+          "model_parameters.oil_thermal_capacitance",
+          "model_parameters.winding_thermal_capacitance",
+          "model_parameters.minimum_temperature",
+          "model_parameters.maximum_temperature",
+          "environment.ambient_temperature",
+          "simulation.oil_heat_input",
+          "simulation.winding_heat_input"
+        ],
+        "evidence_references": [
+          "PHASE4_INDEPENDENT_VALIDATION_V1/frontend"
+        ],
+        "case_id": "PHASE4_INDEPENDENT_VALIDATION_V1/frontend",
+        "comparison_id": null,
+        "numerical_verification_reference": null,
+        "mesh_convergence_reference": null
+      }
+    },
+    "top_oil_rise": {
+      "value": 29.999999999978286,
+      "unit": "K",
+      "result_kind": "CALCULATED_ESTIMATE",
+      "status": "READY",
+      "reasons": [],
+      "missing_inputs": [],
+      "warnings": [
+        {
+          "code": "SIMPLIFIED_NODE_PROXY",
+          "message": "Idealized controlled-case node estimate; not a real winding maximum or standards model.",
+          "paths": []
+        }
+      ],
+      "assumptions": [
+        {
+          "message": "Uniform nodes, constant positive R/C and explicit previous-sample heat/boundary hold.",
+          "reference": "PROJECT_TWO_NODE_RC_V1"
+        }
+      ],
+      "coverage": {
+        "start": "2026-10-10T00:00:00Z",
+        "end": "2026-10-10T00:01:40Z",
+        "covered_seconds": 100.0,
+        "expected_seconds": 100.0,
+        "fraction": 1.0,
+        "gap_count": 0,
+        "missing_fields": []
+      },
+      "provenance": {
+        "model_id": "PROJECT_TWO_NODE_RC_V1",
+        "equation_ids": [
+          "PROJECT_TWO_NODE_RC_V1"
+        ],
+        "input_paths": [
+          "model_parameters.oil_thermal_resistance",
+          "model_parameters.winding_thermal_resistance",
+          "model_parameters.oil_thermal_capacitance",
+          "model_parameters.winding_thermal_capacitance",
+          "model_parameters.minimum_temperature",
+          "model_parameters.maximum_temperature",
+          "environment.ambient_temperature",
+          "simulation.oil_heat_input",
+          "simulation.winding_heat_input"
+        ],
+        "evidence_references": [
+          "PHASE4_INDEPENDENT_VALIDATION_V1/frontend"
+        ],
+        "case_id": "PHASE4_INDEPENDENT_VALIDATION_V1/frontend",
+        "comparison_id": null,
+        "numerical_verification_reference": null,
+        "mesh_convergence_reference": null
+      }
+    },
+    "winding_hot_spot_gradient": {
+      "value": 19.999999999998806,
+      "unit": "K",
+      "result_kind": "CALCULATED_ESTIMATE",
+      "status": "READY",
+      "reasons": [],
+      "missing_inputs": [],
+      "warnings": [
+        {
+          "code": "SIMPLIFIED_NODE_PROXY",
+          "message": "Idealized controlled-case node estimate; not a real winding maximum or standards model.",
+          "paths": []
+        }
+      ],
+      "assumptions": [
+        {
+          "message": "Uniform nodes, constant positive R/C and explicit previous-sample heat/boundary hold.",
+          "reference": "PROJECT_TWO_NODE_RC_V1"
+        }
+      ],
+      "coverage": {
+        "start": "2026-10-10T00:00:00Z",
+        "end": "2026-10-10T00:01:40Z",
+        "covered_seconds": 100.0,
+        "expected_seconds": 100.0,
+        "fraction": 1.0,
+        "gap_count": 0,
+        "missing_fields": []
+      },
+      "provenance": {
+        "model_id": "PROJECT_TWO_NODE_RC_V1",
+        "equation_ids": [
+          "PROJECT_TWO_NODE_RC_V1"
+        ],
+        "input_paths": [
+          "model_parameters.oil_thermal_resistance",
+          "model_parameters.winding_thermal_resistance",
+          "model_parameters.oil_thermal_capacitance",
+          "model_parameters.winding_thermal_capacitance",
+          "model_parameters.minimum_temperature",
+          "model_parameters.maximum_temperature",
+          "environment.ambient_temperature",
+          "simulation.oil_heat_input",
+          "simulation.winding_heat_input"
+        ],
+        "evidence_references": [
+          "PHASE4_INDEPENDENT_VALIDATION_V1/frontend"
+        ],
+        "case_id": "PHASE4_INDEPENDENT_VALIDATION_V1/frontend",
+        "comparison_id": null,
+        "numerical_verification_reference": null,
+        "mesh_convergence_reference": null
+      }
+    },
+    "total_loss": {
+      "value": null,
+      "unit": "W",
+      "result_kind": "CALCULATED_ESTIMATE",
+      "status": "INVALID_CONFIGURATION",
+      "reasons": [
+        {
+          "code": "MODEL_NOT_CONFIGURED",
+          "message": "Loss approximation is not selected.",
+          "paths": [
+            "selection.loss_enabled"
+          ]
+        }
+      ],
+      "missing_inputs": [
+        "selection.loss_enabled"
+      ],
+      "warnings": [],
+      "assumptions": [],
+      "coverage": {
+        "start": null,
+        "end": null,
+        "covered_seconds": null,
+        "expected_seconds": null,
+        "fraction": null,
+        "gap_count": 0,
+        "missing_fields": [
+          "selection.loss_enabled"
+        ]
+      },
+      "provenance": {
+        "model_id": null,
+        "equation_ids": [],
+        "input_paths": [],
+        "evidence_references": [],
+        "case_id": null,
+        "comparison_id": null,
+        "numerical_verification_reference": null,
+        "mesh_convergence_reference": null
+      }
+    },
+    "ageing_acceleration_factor": {
+      "value": null,
+      "unit": "1",
+      "result_kind": "CALCULATED_ESTIMATE",
+      "status": "INVALID_CONFIGURATION",
+      "reasons": [
+        {
+          "code": "EQUATION_UNVERIFIED",
+          "message": "Selected standards ageing equations are unverified.",
+          "paths": [
+            "model_parameters.ageing_law"
+          ]
+        },
+        {
+          "code": "AGEING_PREREQUISITES_UNESTABLISHED",
+          "message": "Applicable insulation/liquid and eligible hot-spot history are not established.",
+          "paths": [
+            "equipment.insulation_type"
+          ]
+        }
+      ],
+      "missing_inputs": [
+        "equipment.insulation_type",
+        "model_parameters.ageing_law"
+      ],
+      "warnings": [],
+      "assumptions": [],
+      "coverage": {
+        "start": null,
+        "end": null,
+        "covered_seconds": null,
+        "expected_seconds": null,
+        "fraction": null,
+        "gap_count": 0,
+        "missing_fields": [
+          "equipment.insulation_type",
+          "model_parameters.ageing_law"
+        ]
+      },
+      "provenance": {
+        "model_id": null,
+        "equation_ids": [],
+        "input_paths": [],
+        "evidence_references": [],
+        "case_id": null,
+        "comparison_id": null,
+        "numerical_verification_reference": null,
+        "mesh_convergence_reference": null
+      }
+    },
+    "equivalent_ageing_hours": {
+      "value": null,
+      "unit": "h",
+      "result_kind": "CALCULATED_ESTIMATE",
+      "status": "INVALID_CONFIGURATION",
+      "reasons": [
+        {
+          "code": "EQUATION_UNVERIFIED",
+          "message": "Selected standards ageing equations are unverified.",
+          "paths": [
+            "model_parameters.ageing_law"
+          ]
+        },
+        {
+          "code": "AGEING_PREREQUISITES_UNESTABLISHED",
+          "message": "Applicable insulation/liquid and eligible hot-spot history are not established.",
+          "paths": [
+            "equipment.insulation_type"
+          ]
+        }
+      ],
+      "missing_inputs": [
+        "equipment.insulation_type",
+        "model_parameters.ageing_law"
+      ],
+      "warnings": [],
+      "assumptions": [],
+      "coverage": {
+        "start": null,
+        "end": null,
+        "covered_seconds": null,
+        "expected_seconds": null,
+        "fraction": null,
+        "gap_count": 0,
+        "missing_fields": [
+          "equipment.insulation_type",
+          "model_parameters.ageing_law"
+        ]
+      },
+      "provenance": {
+        "model_id": null,
+        "equation_ids": [],
+        "input_paths": [],
+        "evidence_references": [],
+        "case_id": null,
+        "comparison_id": null,
+        "numerical_verification_reference": null,
+        "mesh_convergence_reference": null
+      }
+    },
+    "fem_hot_spot_temperature": {
+      "value": null,
+      "unit": "DEG_C",
+      "result_kind": "SIMULATED_REFERENCE",
+      "status": "INVALID_CONFIGURATION",
+      "reasons": [
+        {
+          "code": "MODEL_NOT_CONFIGURED",
+          "message": "FEM/comparison is not implemented in Phase 2.",
+          "paths": [
+            "simulation.fem"
+          ]
+        }
+      ],
+      "missing_inputs": [
+        "simulation.fem"
+      ],
+      "warnings": [],
+      "assumptions": [],
+      "coverage": {
+        "start": null,
+        "end": null,
+        "covered_seconds": null,
+        "expected_seconds": null,
+        "fraction": null,
+        "gap_count": 0,
+        "missing_fields": [
+          "simulation.fem"
+        ]
+      },
+      "provenance": {
+        "model_id": null,
+        "equation_ids": [],
+        "input_paths": [],
+        "evidence_references": [],
+        "case_id": null,
+        "comparison_id": null,
+        "numerical_verification_reference": null,
+        "mesh_convergence_reference": null
+      }
+    },
+    "hot_spot_difference": {
+      "value": null,
+      "unit": "K",
+      "result_kind": "CALCULATED_ESTIMATE",
+      "status": "INVALID_CONFIGURATION",
+      "reasons": [
+        {
+          "code": "MODEL_NOT_CONFIGURED",
+          "message": "FEM/comparison is not implemented in Phase 2.",
+          "paths": [
+            "simulation.fem"
+          ]
+        }
+      ],
+      "missing_inputs": [
+        "simulation.fem"
+      ],
+      "warnings": [],
+      "assumptions": [],
+      "coverage": {
+        "start": null,
+        "end": null,
+        "covered_seconds": null,
+        "expected_seconds": null,
+        "fraction": null,
+        "gap_count": 0,
+        "missing_fields": [
+          "simulation.fem"
+        ]
+      },
+      "provenance": {
+        "model_id": null,
+        "equation_ids": [],
+        "input_paths": [],
+        "evidence_references": [],
+        "case_id": null,
+        "comparison_id": null,
+        "numerical_verification_reference": null,
+        "mesh_convergence_reference": null
+      }
+    }
+  }
+}

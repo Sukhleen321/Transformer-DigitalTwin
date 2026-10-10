@@ -1,0 +1,43 @@
+{
+  "case_id": "SYNTHETIC_SINE_RECTANGLE_V1",
+  "case_version": "1.0.0",
+  "context": "CONTROLLED_SIMULATION",
+  "origin_kind": "SIMULATED",
+  "input_verification": "SYNTHETIC",
+  "geometry": "RECTANGLE_UNIFORM_THICKNESS",
+  "material": "HOMOGENEOUS_CONSTANT_ISOTROPIC",
+  "source_distribution": "MANUFACTURED_SINE_V1",
+  "boundary_condition": "FULL_CONSTANT_DIRICHLET",
+  "initial_condition": "NOT_APPLICABLE_STEADY_STATE",
+  "evidence": {
+    "kind": "SYNTHETIC_CASE",
+    "reference": "docs/fem_reference.md#geometry-material-sources-and-boundary-data",
+    "applicability": "Synthetic numerical verification only; no transformer or real material."
+  },
+  "parameters": {
+    "length_x": {"value": 1, "unit": "m", "quantity_kind": "length", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+    "length_y": {"value": 1, "unit": "m", "quantity_kind": "length", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+    "thickness": {"value": 1, "unit": "m", "quantity_kind": "length", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+    "conductivity": {"value": 1, "unit": "W/(m*K)", "quantity_kind": "thermal_conductivity", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+    "boundary_temperature": {"value": 300, "unit": "K", "quantity_kind": "absolute_temperature", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+    "temperature_amplitude": {"value": 10, "unit": "K", "quantity_kind": "temperature_difference", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"}
+  },
+  "numerical_policy": {
+    "subdivisions": [
+      {"value": 8, "unit": "count", "quantity_kind": "count", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+      {"value": 16, "unit": "count", "quantity_kind": "count", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+      {"value": 32, "unit": "count", "quantity_kind": "count", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+      {"value": 64, "unit": "count", "quantity_kind": "count", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"}
+    ],
+    "quadrature_order": {"value": 6, "unit": "count", "quantity_kind": "count", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+    "check_quadrature_order": {"value": 8, "unit": "count", "quantity_kind": "count", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+    "residual_tolerance": {"value": 1e-10, "unit": "1", "quantity_kind": "dimensionless", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+    "balance_tolerance": {"value": 1e-8, "unit": "W", "quantity_kind": "heat_rate", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+    "power_tolerance": {"value": 1e-6, "unit": "W", "quantity_kind": "heat_rate", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+    "minimum_l2_order": {"value": 1.8, "unit": "1", "quantity_kind": "dimensionless", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+    "minimum_h1_order": {"value": 0.9, "unit": "1", "quantity_kind": "dimensionless", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+    "final_l2_tolerance": {"value": 0.005, "unit": "K*m", "quantity_kind": "spatial_l2_temperature_error", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+    "maximum_temperature_tolerance": {"value": 0.01, "unit": "K", "quantity_kind": "temperature_difference", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"},
+    "quadrature_error_tolerance": {"value": 1e-8, "unit": "K*m", "quantity_kind": "spatial_l2_temperature_error", "verification": "SYNTHETIC", "evidence_reference": "SYNTHETIC_SINE_RECTANGLE_V1"}
+  }
+}

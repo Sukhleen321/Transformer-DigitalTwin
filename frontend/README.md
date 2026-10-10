@@ -106,3 +106,116 @@ It reads the authoritative shared roster and the running backend, saves both
 five-card pages plus detail under `screenshots/operational-ten/`, and verifies
 TX10/TX01 isolation and actual telemetry advancement. The older verify-console
 script and screenshots remain historical 93-asset evidence, not current acceptance.
+
+## Physics read integration (Phase 6)
+
+The existing **Thermal & loading** view now includes a Physics results panel
+below the observed-oil/backend-model chart. It calls the separate
+`GET /api/v1/transformers/{id}/physics` resource through the existing API client,
+base URL and ten-second timeout. No historical cutoff is supplied. Selection,
+view entry, the existing Refresh button and the error-only Retry physics button
+trigger reads; physics has no recurring timer. Other console views retain their
+existing requests and displays.
+
+All ten version 1.0.0 components are validated, with independent status, null,
+unit and provenance handling. Loading, errors, asset/view changes and refreshes
+withhold old values. If the latest telemetry advances past the returned physics
+event, numbers are withheld until an explicit refresh. Selected event and server
+evaluation times are distinct and displayed in the browser timezone, retaining
+UTC ISO attributes. The panel describes a read snapshot, not continuous readiness.
+
+Controlled RC temperatures and rises are **controlled-simulation estimates /
+simplified node proxies**. They are not equipment top-oil or winding hot-spot
+measurements. Operational thermal, ageing, FEM hot-spot/comparison, real RUL and
+failure probability remain unavailable in this physics release. Current-squared
+loss displays only an eligible READY component; no values are inferred from fleet
+ratings. Existing scenario RUL and empirical analytics are separate, unchanged
+resources. Component and identity disclosures show supplied references, coverage,
+assumptions and warnings; they do not retrieve evidence bodies.
+
+Deploy the approved Phase 5 backend before expecting this route to exist. Physics
+remains disabled by default and requires operator-managed migration/profile
+publication and documented input evidence. This frontend neither enables it nor
+installs any profile. The currently running older backend returns 404 for this
+route; the panel surfaces that error with a retry. Deployment was not changed.
+See [integration prerequisites](../docs/physics_integration.md) and
+[Phase 6 results](../docs/phase6_report.md).
+
+`npm test -- tests/physics.test.tsx` runs focused contract/state/interaction tests.
+`tests/physics-controlled.json` is test-only: generated from the approved Phase 4
+synthetic manifest by the unchanged estimator and serialized/validated by the
+backend response schema. Other status/zero/measured fixtures are hypothetical
+UI cases, not equipment data. Application code never imports them. No standards
+compliance, operational accuracy or end-to-end deployment validation is claimed.
+
+## Phase 7 release verification
+
+[Phase 7](../docs/phase7_report.md) confirmed that the retained port-8001 Docker
+image contains no physics module/router entry; its 404 persists until a separately
+authorized rollout. The current checkout's route is registered even with
+PHYSICS_ENABLED=false. An isolated source backend and actual browser passed
+disabled/no-profile unavailable responses, retry/error, identity, cancellation,
+disclosure and mobile checks. This is not a successful equipment thermal result.
+
+The reproducible [backend verifier](../backend/scripts/verify_physics_release.py)
+optionally invokes [verify-physics-release.cjs](scripts/verify-physics-release.cjs)
+using supplied existing Playwright/browser paths. It owns a new disposable DB and
+temporary processes; it does not modify the retained deployment. For a backend
+on 8002 use a direct VITE_API_BASE_URL origin and exact frontend CORS origin;
+the existing same-origin dev proxy still targets 8001. Production API configuration
+is embedded at build time. See [safe setup](../README.md) and
+[model limitations](../docs/model_limitations.md). Release decision: NOT READY.
+# Opt-in live synthetic physics demonstration
+
+The Transformer monitoring grid (six existing cards plus ten physics cards) and
+the Thermal & loading panel can display the separate live demo API when
+`VITE_LIVE_PHYSICS_DEMO_ENABLED=true`. The default is false/unset; normal builds
+retain the production physics contract. Set `VITE_API_BASE_URL` explicitly to
+the isolated backend origin (no `/api/v1` suffix), with backend CORS matching the
+exact frontend origin. The [safe local launcher](../docs/live_physics_simulation_report.md)
+sets these variables only for its separately owned Vite process.
+
+While either selected view is active, one shared demo hook polls every 4 s by
+default. `VITE_LIVE_PHYSICS_POLL_INTERVAL_MS` accepts 1000–10000 ms; invalid or
+unset values use 4000 ms. The launcher sets it from its `--interval` option.
+The hook cancels on asset
+changes/navigation, rejects older event watermarks and withholds values on
+errors or stale events. All ten rows display numeric demo quantities after
+initialization, units, readiness, synthetic provenance and model evidence. The
+LIVE SIMULATION indicator and event/publication/latest-update times distinguish
+this case from equipment readings. FEM uses a shared winding **mean** proxy;
+illustrative ageing is not insulation life. No production environment files,
+deployed frontend configuration or operational eligibility are changed. The
+additional cards reuse the existing responsive grid and card styles, with scoped
+rules for wrapping provenance and long titles. See the
+[dashboard implementation and verification status](../docs/live_physics_dashboard_report.md)
+before treating this placement as verified against a running backend.
+
+For a running local demo, use the single PowerShell command from repository root:
+
+```powershell
+./backend/scripts/Start-LivePhysicsDemo.ps1
+```
+
+If `TEST_DATABASE_URL` is not supplied securely, this prompts for the local
+PostgreSQL port/user/password. It creates and migrates a new disposable database,
+starts the backend and producer, and supplies the frontend configuration explicitly.
+Open the **printed frontend URL** (normally `http://127.0.0.1:5177`) and select
+any of the ten fictional fleet assets (the PowerShell wrapper's defaults).
+The Python launcher can use repeated `--asset` options and retains its old
+fleet defaults. An already open ordinary frontend keeps its default
+disabled flag; no page reload can replace its build/process environment.
+Ctrl+C performs owned-resource cleanup. `-VerifyApi` performs browser-free API/
+database verification and cleans up automatically. See the
+[actual pipeline results and current manual-demo details](../docs/live_physics_data_pipeline_report.md).
+For the current known-asset demo session and preferred `ENABLE_PHYSICS_DEMO`
+backend flag, see [enablement and numeric API evidence](../docs/physics_demo_enablement_report.md).
+
+The complete opt-in Docker stack is now started with
+`./backend/scripts/Start-TenTransformerDemo.ps1` from repository root.
+Its frontend build sets `VITE_API_BASE_URL=/`, demo flag `true`, and 5000 ms polling.
+The existing API client resolves `/` to the same origin; the profile-only Nginx
+configuration proxies `/api/` to `backend:8000`. No browser uses Docker hostnames.
+Ordinary Docker builds retain the demo-disabled default. Use the launcher's
+printed frontend URL and session-file stop command, not an older frontend tab.
+See [full-stack automated verification and manual checklist](../docs/full_stack_ten_transformer_integration_report.md).

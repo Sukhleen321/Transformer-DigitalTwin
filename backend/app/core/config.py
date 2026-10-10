@@ -4,7 +4,7 @@ import json
 from functools import lru_cache
 from typing import Annotated, Literal
 
-from pydantic import Field, SecretStr, field_validator, model_validator
+from pydantic import AliasChoices, Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 from sqlalchemy.engine import make_url
 
@@ -12,7 +12,9 @@ from app.schemas.common import ReasonCode
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=".env", env_file_encoding="utf-8", extra="ignore", populate_by_name=True
+    )
 
     database_url: str = "postgresql+psycopg://transformer:transformer@localhost:5432/transformer"
     env: str = "development"
@@ -23,6 +25,43 @@ class Settings(BaseSettings):
     ml_http_url: str | None = None
     ml_python_entrypoint: str | None = None
     ml_history_window: int = Field(default=4096, ge=1, le=4096)
+    physics_enabled: bool = False
+    physics_demo_input_mode: Literal["standalone", "accepted-telemetry"] = "standalone"
+    live_physics_demo_enabled: bool = Field(
+        default=False,
+        validation_alias=AliasChoices("ENABLE_PHYSICS_DEMO", "LIVE_PHYSICS_DEMO_ENABLED"),
+    )
+
+    @field_validator("live_physics_demo_enabled", mode="before")
+    @classmethod
+    def parse_physics_demo_flag(cls, value: object) -> bool:
+        if isinstance(value, bool):
+            return value
+        if isinstance(value, str):
+            value = value.strip().lower()
+            if value in {"true", "1", "yes", "on"}:
+                return True
+            if value in {"false", "0", "no", "off"}:
+                return False
+        if type(value) is int and value in (0, 1):
+            return bool(value)
+        raise ValueError("ENABLE_PHYSICS_DEMO must be a boolean: true/false, 1/0, yes/no or on/off")
+
+    @model_validator(mode="after")
+    def physics_demo_configuration(self):
+        if self.live_physics_demo_enabled and self.physics_demo_input_mode == "accepted-telemetry":
+            if not self.operational_fleet_file:
+                raise ValueError(
+                    "PHYSICS_DEMO_INPUT_MODE=accepted-telemetry requires OPERATIONAL_FLEET_FILE"
+                )
+            from ml.demo_physics.fleet import load_fleet
+
+            try:
+                load_fleet(self.operational_fleet_file)
+            except (OSError, KeyError, TypeError) as exc:
+                raise ValueError("OPERATIONAL_FLEET_FILE is unreadable or invalid") from exc
+        return self
+
     analytics_policy_file: str | None = None
     operational_fleet_file: str | None = None
     ml_runtime_workers: Literal[1] = 1
@@ -84,8 +123,9 @@ class Settings(BaseSettings):
     @model_validator(mode="after")
     def mqtt_configuration(self) -> "Settings":
         import os
-        if self.ml_backend == 'python' and int(os.environ.get('WEB_CONCURRENCY', '1')) != 1:
-            raise ValueError('H01 runtime supports exactly one backend process/worker')
+
+        if self.ml_backend == "python" and int(os.environ.get("WEB_CONCURRENCY", "1")) != 1:
+            raise ValueError("H01 runtime supports exactly one backend process/worker")
         if self.alert_health_crit > self.alert_health_warn:
             raise ValueError("ALERT_HEALTH_CRIT must be <= ALERT_HEALTH_WARN")
         if self.alert_fault_risk_crit < self.alert_fault_risk_warn:

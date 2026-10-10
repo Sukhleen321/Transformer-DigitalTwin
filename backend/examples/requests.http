@@ -250,3 +250,12 @@ X-Request-ID: http-demo-example
 POST {{baseUrl}}/api/v1/admin/demo/reset?include_transformers=false
 X-Request-ID: http-demo-example
 X-Admin-Token: {{adminToken}}
+
+### Physics: unavailable unless an explicit supported profile/result exists
+# GET /api/v1/transformers/{transformer_id}/physics
+GET {{baseUrl}}/api/v1/transformers/TX-001/physics
+X-Request-ID: physics-read-example
+
+### Controlled historical cutoff, requiring retained synthetic observations
+GET {{baseUrl}}/api/v1/transformers/TX-001/physics?at=2026-10-10T00:00:01Z
+X-Request-ID: physics-controlled-example

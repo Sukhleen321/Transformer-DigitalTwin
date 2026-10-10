@@ -1,0 +1,226 @@
+[
+  {
+    "demo_contract_version": "1.0.0",
+    "mode": "LIVE_SIMULATION",
+    "transformer_id": "LIVE-DEMO-A",
+    "run_id": "3909e2e13add4ef39ef50fdd34b88f03",
+    "sequence": 3,
+    "timestamp": "2026-10-10T20:18:54.136281Z",
+    "published_at": "2026-10-10T20:18:54.143516Z",
+    "evaluated_at": "2026-10-10T20:18:54.633886Z",
+    "status": "READY",
+    "reason": null,
+    "case_id": "LIVE_SYNTHETIC_TWO_LAYER_V1",
+    "components": {
+      "total_loss": {
+        "value": 18.521226055926043,
+        "unit": "W",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "PROJECT_CURRENT_SQUARED_LOSS_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "total_loss"
+      },
+      "top_oil_rise": {
+        "value": 0.7137770748134926,
+        "unit": "K",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "PROJECT_TWO_NODE_RC_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "top_oil_rise"
+      },
+      "hot_spot_difference": {
+        "value": -1.6484591469634324e-12,
+        "unit": "K",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "DEMO_SHARED_WINDING_MEAN_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "AREA_MEAN_WINDING_PROXY"
+      },
+      "top_oil_temperature": {
+        "value": 27.5637770748135,
+        "unit": "DEG_C",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "PROJECT_TWO_NODE_RC_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "top_oil_temperature"
+      },
+      "hot_spot_temperature": {
+        "value": 28.36880699380484,
+        "unit": "DEG_C",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "PROJECT_TWO_NODE_RC_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "AREA_MEAN_WINDING_PROXY"
+      },
+      "equivalent_ageing_hours": {
+        "value": 0.0013811917322478265,
+        "unit": "h",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "DEMO_TRAPEZOID_HOURS_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "equivalent_ageing_hours"
+      },
+      "fem_hot_spot_temperature": {
+        "value": 28.368806993806515,
+        "unit": "DEG_C",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "DEMO_TWO_SHEET_FEM_MEAN_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "AREA_MEAN_WINDING_PROXY"
+      },
+      "measured_oil_temperature": {
+        "value": 27.030365623592274,
+        "unit": "DEG_C",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "DEMO_SENSOR_LAG_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "measured_oil_temperature"
+      },
+      "winding_hot_spot_gradient": {
+        "value": 0.8050299189913517,
+        "unit": "K",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "PROJECT_TWO_NODE_RC_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "winding_hot_spot_gradient"
+      },
+      "ageing_acceleration_factor": {
+        "value": 0.654384846485839,
+        "unit": "1",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "DEMO_EXP_TEMPERATURE_INDEX_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "ageing_acceleration_factor"
+      }
+    },
+    "inputs": {
+      "current_a": 6.460450463119437,
+      "ambient_k": 300.0,
+      "oil_heat_w": 6.0,
+      "winding_heat_w": 12.521226055926045
+    },
+    "maximum_age_seconds": 15.0
+  },
+  {
+    "demo_contract_version": "1.0.0",
+    "mode": "LIVE_SIMULATION",
+    "transformer_id": "LIVE-DEMO-A",
+    "run_id": "3909e2e13add4ef39ef50fdd34b88f03",
+    "sequence": 4,
+    "timestamp": "2026-10-10T20:18:58.127269Z",
+    "published_at": "2026-10-10T20:18:58.135246Z",
+    "evaluated_at": "2026-10-10T20:18:58.197019Z",
+    "status": "READY",
+    "reason": null,
+    "case_id": "LIVE_SYNTHETIC_TWO_LAYER_V1",
+    "components": {
+      "total_loss": {
+        "value": 20.278568920158698,
+        "unit": "W",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "PROJECT_CURRENT_SQUARED_LOSS_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "total_loss"
+      },
+      "top_oil_rise": {
+        "value": 1.12921114343294,
+        "unit": "K",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "PROJECT_TWO_NODE_RC_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "top_oil_rise"
+      },
+      "hot_spot_difference": {
+        "value": -2.3874235921539366e-12,
+        "unit": "K",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "DEMO_SHARED_WINDING_MEAN_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "AREA_MEAN_WINDING_PROXY"
+      },
+      "top_oil_temperature": {
+        "value": 27.97921114343294,
+        "unit": "DEG_C",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "PROJECT_TWO_NODE_RC_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "top_oil_temperature"
+      },
+      "hot_spot_temperature": {
+        "value": 29.12378565936453,
+        "unit": "DEG_C",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "PROJECT_TWO_NODE_RC_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "AREA_MEAN_WINDING_PROXY"
+      },
+      "equivalent_ageing_hours": {
+        "value": 0.002120602183603298,
+        "unit": "h",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "DEMO_TRAPEZOID_HOURS_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "equivalent_ageing_hours"
+      },
+      "fem_hot_spot_temperature": {
+        "value": 29.123785659366945,
+        "unit": "DEG_C",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "DEMO_TWO_SHEET_FEM_MEAN_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "AREA_MEAN_WINDING_PROXY"
+      },
+      "measured_oil_temperature": {
+        "value": 27.32366747622882,
+        "unit": "DEG_C",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "DEMO_SENSOR_LAG_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "measured_oil_temperature"
+      },
+      "winding_hot_spot_gradient": {
+        "value": 1.1445745159315948,
+        "unit": "K",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "PROJECT_TWO_NODE_RC_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "winding_hot_spot_gradient"
+      },
+      "ageing_acceleration_factor": {
+        "value": 0.6795593422111441,
+        "unit": "1",
+        "status": "READY",
+        "provenance": "SYNTHETIC_SIMULATED",
+        "model_id": "DEMO_EXP_TEMPERATURE_INDEX_V1",
+        "reference": "docs/live_physics_demo_model.md",
+        "target": "ageing_acceleration_factor"
+      }
+    },
+    "inputs": {
+      "current_a": 6.898929607834995,
+      "ambient_k": 300.0,
+      "oil_heat_w": 6.0,
+      "winding_heat_w": 14.278568920158694
+    },
+    "maximum_age_seconds": 15.0
+  }
+]

@@ -1,0 +1,55 @@
+3:33:56 pm [vite] (client) Re-optimizing dependencies because vite config has changed
+Port 5173 is in use, trying another one...
+
+  VITE v8.3.3  ready in 344 ms
+
+  ➜  Local:   http://127.0.0.1:5174/
+  ➜  press h + enter to show help
+3:38:44 pm [vite] (client) hmr update /src/pages/Workspace.tsx, /src/index.css
+3:38:44 pm [vite] (client) page reload src/main.tsx
+3:38:44 pm [vite] (client) page reload index.html
+3:39:45 pm [vite] (client) hmr update /src/dashboard.css, /src/index.css
+3:39:45 pm [vite] (client) hmr update /src/index.css
+3:40:57 pm [vite] (client) hmr update /src/dashboard.css, /src/index.css
+3:42:50 pm [vite] (client) hmr update /src/index.css, /src/pages/Workspace.tsx, /src/components/dashboard/Chart.tsx, /src/components/dashboard/UI.tsx
+3:42:50 pm [vite] (client) hmr update /src/index.css, /src/components/dashboard/UI.tsx
+3:42:50 pm [vite] (client) hmr update /src/index.css, /src/pages/Workspace.tsx
+3:42:50 pm [vite] (client) hmr update /src/index.css, /src/pages/Workspace.tsx
+3:42:55 pm [vite] (client) hmr update /src/pages/Workspace.tsx, /src/index.css
+3:45:40 pm [vite] (client) page reload src/App.tsx
+3:45:40 pm [vite] (client) page reload index.html
+3:45:40 pm [vite] (client) hmr update /src/index.css
+3:45:40 pm [vite] vite.config.ts changed, restarting server...
+3:45:40 pm [vite] (client) page reload src/main.tsx
+3:45:40 pm [vite] server restarted.
+3:50:10 pm [vite] (client) page reload index.html
+3:50:10 pm [vite] vite.config.ts changed, restarting server...
+3:50:10 pm [vite] server restarted.
+3:50:26 pm [vite] (client) page reload index.html
+3:50:26 pm [vite] vite.config.ts changed, restarting server...
+3:50:26 pm [vite] server restarted.
+3:53:14 pm [vite] (client) page reload index.html
+3:53:14 pm [vite] vite.config.ts changed, restarting server...
+3:53:15 pm [vite] server restarted.
+6:01:54 pm [vite] (client) hmr update /src/components/console/MonitoringConsole.tsx, /src/index.css
+6:01:54 pm [vite] (client) hmr update /src/index.css
+6:01:54 pm [vite] (client) page reload scripts/verify-ten.mjs
+6:11:47 pm [vite] (client) [optimizer] bundling dependencies...
+6:11:48 pm [vite] (client) dependency optimized: zod
+6:11:48 pm [vite] (client) optimized dependencies changed. reloading
+10:53:58 pm [vite] (client) hmr update /src/index.css, /src/components/console/MonitoringConsole.tsx
+10:53:58 pm [vite] (client) hmr update /src/components/console/MonitoringConsole.tsx, /src/index.css
+10:54:04 pm [vite] (client) hmr update /src/components/console/MonitoringConsole.tsx, /src/index.css
+10:56:03 pm [vite] (client) hmr update /src/index.css, /src/components/console/MonitoringConsole.tsx
+10:56:03 pm [vite] (client) hmr update /src/index.css, /src/components/console/PhysicsPanel.tsx
+11:00:37 pm [vite] (client) hmr update /src/index.css
+11:00:37 pm [vite] (client) hmr update /src/index.css, /src/components/console/PhysicsPanel.tsx
+11:00:41 pm [vite] (client) hmr update /src/components/console/MonitoringConsole.tsx, /src/index.css
+11:04:37 pm [vite] (client) hmr update /src/index.css
+11:06:02 pm [vite] (client) hmr update /src/index.css, /src/components/console/PhysicsPanel.tsx
+12:14:55 am [vite] (client) hmr update /src/index.css, /src/components/console/MonitoringConsole.tsx
+12:14:55 am [vite] (client) hmr update /src/index.css, /src/components/console/MonitoringConsole.tsx
+12:14:55 am [vite] (client) hmr update /src/index.css, /src/components/console/PhysicsPanel.tsx
+12:15:40 am [vite] (client) hmr update /src/index.css, /src/components/console/MonitoringConsole.tsx
+12:15:40 am [vite] (client) hmr update /src/index.css, /src/components/console/MonitoringConsole.tsx
+12:28:25 am [vite] (client) hmr update /src/index.css, /src/components/console/MonitoringConsole.tsx

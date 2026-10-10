@@ -13,7 +13,8 @@ DEFAULT_FLEET = DEFAULT_CONFIG / 'operational-fleet.json'
 
 
 def load_fleet(path=DEFAULT_FLEET):
-    fleet = json.loads(Path(path).read_text(encoding='utf-8'))
+    from ml.demo_physics.fleet import load_fleet as shared_fleet
+    fleet = shared_fleet(path)
     if fleet.get('version') != 'operational-fleet-v1' or not fleet.get('assets'):
         raise ValueError('Unsupported or empty operational fleet')
     ids, units = set(), set()
@@ -49,6 +50,8 @@ def load_runtime_config(path, role, now=None):
         config['assets'].append(item)
     if role == 'server':
         config['interval_seconds'] = fleet['interval_seconds']
+        if 'signal_profile' in fleet:
+            config['signal_profile'] = fleet['signal_profile']
         # New source sessions resume the live UTC clock, not old accepted times.
         # Generator counters/sequence restart explicitly; energy reset handling
         # and backend accepted-history/checkpoint semantics remain unchanged.

@@ -256,3 +256,107 @@ ingestion, alert rules or ML behavior changed. The optional demo reset is disabl
 default and refuses production. The earlier snapshot remains intact, allowing the new
 admin endpoint as an additive API change.
 
+
+## Physics persistence and read resource (unified plan Phase 5)
+
+This is the physics project's Phase 5, separate from the earlier MQTT work
+above. See [physics integration](../docs/physics_integration.md) and the
+[Phase 5 report](../docs/phase5_report.md). No frontend changes are included.
+
+Install the existing local ML package and backend dependencies using the
+repository setup. From this backend directory, using that configured interpreter:
+
+```powershell
+python -m alembic upgrade head
+# Optional only after an explicit supported profile is published:
+$env:PHYSICS_ENABLED = "true"
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8002
+Invoke-RestMethod http://127.0.0.1:8002/health/ready
+Invoke-RestMethod http://127.0.0.1:8002/api/v1/transformers/TX-001/physics
+```
+
+PHYSICS_ENABLED defaults false. Migration 0005 adds empty isolated tables,
+without installing fixture parameters. Keep DATABASE_URL in the existing
+environment configuration; migrate before enabling the hook. With the flag off,
+the read resource returns all ten unavailable components. There is no HTTP
+profile-write endpoint. Trusted operator code can call
+`app.services.physics_service.publish_profile(session, explicit_snapshot,
+source_name="documented-source")` and `session.commit()`. It requires a registered
+asset, explicit inputs and immutable version/source/evidence identities. The
+operator must establish actual units, applicability and provenance. Synthetic
+cases must retain their synthetic labels; records are not automatically verified.
+
+Use `?at=<aware ISO timestamp>` for a controlled historical cutoff. The 31-day
+selector returns the selected event or a complete unavailable envelope and
+never carries an older READY value forward. Controlled thermal values are
+idealized node proxies. Operational standards thermal, ageing, FEM hot-spot,
+comparisons, RUL and failure probability are unsupported.
+
+On corruption/incompatible state, publish a new configuration activation and
+matching initial temperatures with `recover=True`. Old seeds are not moved.
+Exact retries never advance state; late events never replay history. Immutable
+records stay resolvable, subject to explicit size/count caps. Downgrading 0005
+destroys physics storage; use only on disposable databases or with separately
+authorized backup/release procedures.
+# Opt-in live synthetic physics demonstration
+
+See [live demo model](../docs/live_physics_demo_model.md) and
+[local report/start-stop instructions](../docs/live_physics_simulation_report.md).
+From the repository root, with `TEST_DATABASE_URL` supplied securely for a local
+PostgreSQL administrator and frontend dependencies already installed:
+
+```powershell
+.venv/Scripts/python.exe backend/scripts/live_physics_demo.py --backend-port 8002 --frontend-port 5177 --interval 4
+```
+
+This creates a uniquely named disposable database, migrates only it, and starts
+the current-source API, separate producer and opt-in current frontend. Ctrl+C
+stops the owned children and drops that new database. Occupied ports select the
+next available port; the launcher prints the actual URLs. No retained container
+is rebuilt/restarted. `ENABLE_PHYSICS_DEMO` (legacy alias
+`LIVE_PHYSICS_DEMO_ENABLED`) defaults false and also requires
+`PHYSICS_ENABLED`, `ENV=local-demo` and a matching disposable database name.
+The demo GET is `/api/v1/demo/transformers/{id}/physics`; the ordinary endpoint,
+frozen physics schema and operational restrictions are unchanged. Demo writes
+go only into `live_physics_demo_events`, never canonical telemetry or profiles.
+Do not run migration `0006` against retained data without a future approved plan.
+
+The single-command PowerShell wrapper `./backend/scripts/Start-LivePhysicsDemo.ps1`
+(from repository root) prompts securely for local PostgreSQL access when
+`TEST_DATABASE_URL` is absent, then starts this same launcher. `-VerifyApi` tests
+the real raw-event/persistence/API path without a browser and cleans up.
+`-StopFile <absolute-path>` lets a second terminal request normal owned-resource
+cleanup by creating that file. The file must not already exist at startup.
+The wrapper registers/simulates all ten IDs from `simulator/config/operational-fleet.json` by default.
+Use `-Asset @('ID-A','ID-B')` for other explicitly fictional identities; the same
+list is passed to registration, producer and verification. The native Python
+launcher uses that same fleet by default and accepts repeated
+`--asset` options. Asset identity does not supply a real equipment nameplate.
+Raw events are validated and retained inside each demo checkpoint JSON; no new
+migration or production telemetry write is needed. See
+[data pipeline report](../docs/live_physics_data_pipeline_report.md).
+Current configuration/asset verification and exact response samples:
+[demo enablement report](../docs/physics_demo_enablement_report.md).
+The preferred flag wins over its legacy alias within one settings source.
+Constructor values override process environment, which overrides the working
+directory's `.env`; settings are cached for the lifetime of the process.
+Changing a local `.env` never updates an already running container's environment.
+
+For the complete disposable MQTT/Modbus/analytics/physics stack, from the root:
+
+```powershell
+./backend/scripts/Start-TenTransformerDemo.ps1
+```
+
+This builds new uniquely tagged images and starts a unique Compose project using
+`docker-compose.physics-demo.yml --profile physics-demo`. It enables the
+`accepted-telemetry` physics input mode; the existing ingestion transaction
+calculates demo results from accepted synthetic MQTT snapshots. It does not run
+the standalone producer or write to retained data. PostgreSQL/broker/spool state
+uses disposable tmpfs, with no retained volumes. Docker Desktop must be running.
+`-CheckOnly` validates Compose without starting services; `-BuildOnly` builds
+images without starting services. Stop using `Stop-TenTransformerDemo.ps1
+-SessionFile <printed-path>`, which targets only that unique project.
+See [ten-transformer integration report](../docs/full_stack_ten_transformer_integration_report.md)
+for actual automated results, limitations and manual verification.
+

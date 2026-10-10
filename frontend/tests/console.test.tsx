@@ -30,7 +30,7 @@ it('opens directly into the API registry overview and changes to equipment monit
   fireEvent.click(screen.getByRole('button',{name:'Monitor HX-B'}));
   await waitFor(() => expect(screen.getByRole('region',{name:'Selected transformer measurements'})).toHaveTextContent('0 A'));
   expect(screen.getByRole('combobox',{name:'Asset',exact:true})).toHaveValue('HX-B');
-  expect(within(screen.getByRole('region',{name:'Six monitoring features'})).getAllByRole('article')).toHaveLength(6);
+  expect(within(screen.getByRole('region',{name:'Transformer monitoring features'})).getAllByRole('article')).toHaveLength(16);
   expect(screen.getByText(/No pressure measurement/)).toBeVisible();
   expect(screen.getByText(/Trip: Cleared/)).toBeVisible();
 });
