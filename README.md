@@ -1,62 +1,177 @@
 # Transformer Digital Twin
 
-React monitoring console, FastAPI/PostgreSQL telemetry backend, existing empirical
-analytics, and separate physics/numerical-verification packages. The sole project
-specification is [the canonical physics-first plan](Transformer_DigitalTwin_Physics_First_Implementation_Plan.md).
-Approved Phase 0–6 work is preserved. [Phase 7 release validation](docs/phase7_report.md)
-records the actual results and the **NOT READY** release decision.
+**A telemetry-to-monitoring platform for transformer assets.** The repository brings together a React operations console, a FastAPI and PostgreSQL backend, an ML runtime, and a Python simulator that can generate, replay, and deliver telemetry over Modbus and MQTT.
 
-The two-node thermal estimator supports controlled simulations only. FEM is an
-independent synthetic steady-conduction benchmark, not a transformer model.
-Operational hot-spot predictions, insulation ageing, real RUL, failure probabilities
-and estimator–FEM comparison are unavailable. IEEE/IEC equation text remains
-unverified; no standards compliance or field accuracy is established. See
-[model limitations](docs/model_limitations.md) and [exact source locators](docs/physics_references.md).
 
-## Architecture and contracts
+## What the system does
 
-Telemetry → existing ingestion/analytics → PostgreSQL → bounded read APIs → console.
-Optional physics writes share the ingestion transaction and restore asset-owned
-checkpoints. Its separate read route is
-`GET /api/v1/transformers/{transformer_id}/physics`. No FEM solve runs in the API.
-The console's Thermal & loading view reads that resource on entry, asset change,
-Refresh or error Retry. All ten components retain independent units, provenance,
-status and nullable values. Missing data never becomes an invented temperature.
+- Accepts telemetry through HTTP, historical replay, or an MQTT stream bridged from a Modbus simulator.
+- Validates and normalizes incoming records, preserving missing values and source context instead of filling gaps with invented measurements.
+- Persists observations and derived analytics in PostgreSQL; the existing ML runtime provides empirical analytics such as anomaly, health, and maintenance outputs, subject to the availability of compatible configuration and artifacts.
+- Serves bounded, versioned read APIs for transformer status, history, trends, alerts, maintenance, and optional physics results.
+- Displays asset status, telemetry, charts, alarms, maintenance, and physics-component availability in a React monitoring console.
+- Keeps physics estimates, their evidence, units, provenance, and availability status explicit. Unsupported values remain unavailable.
 
-- [Current architecture baseline](docs/architecture_current.md) and
-  [physics persistence/read integration](docs/physics_integration.md).
-- [Frozen physics contract 1.0.0](docs/physics_contract.md) and
-  [existing 1.1.0 contract](docs/contracts/hackathon-v1.1.md).
-- [Backend setup](backend/README.md), [frontend setup](frontend/README.md),
-  [FEM benchmark](docs/fem_reference.md), [independent validation](docs/validation_reference.md).
+## Architecture
 
-Historical backend/ML phase numbers describe earlier work. Physics phases 0–7
-follow the canonical root plan; these histories have not been renumbered.
+The primary path carries simulator or external telemetry into the shared ingestion service. HTTP and replay use that same service, as does MQTT. The simulator's Modbus bridge retains uncommitted messages in a spool and checks the backend receipt resource before removing them.
 
-## Local setup and release boundaries
+## Architecture
 
-Use the existing package dependency/lock files. This checkout was tested with
-Python 3.12.7, Node 24.14.1 and npm 11.11.0; the Python environment uses user-site
-packages and is not evidence of a clean production installation. A fresh setup
-requires the local ML/backend packages and their declared dependencies, PostgreSQL,
-and frontend `npm ci --ignore-scripts`. Phase 7 installed no dependencies.
+The primary path carries simulator or external telemetry into the shared ingestion service. HTTP and replay use that same service, as does MQTT. The simulator's Modbus bridge retains uncommitted messages in a spool and checks the backend receipt resource before removing them.
 
-| Setting | Required behavior |
-|---|---|
-| `DATABASE_URL` | Explicit `postgresql+psycopg` URL to the intended database; never rely on the default when migrating. Keep credentials out of source/logs. |
-| `PHYSICS_ENABLED` | Defaults false. It gates processing/availability, not route registration. True alone cannot create an eligible result. |
-| `MQTT_ENABLED` | False for isolated validation; prevent traffic from retained sources. |
-| `ML_BACKEND` | `stub` for empty-resource verification only; this does not verify fitted analytics. Operational Python mode requires actual compatible artifacts/configuration. |
-| `SCHEMA_VERSION` | `1.1.0` in the release verifier; distinct from physics contract `1.0.0`. |
-| `WEB_CONCURRENCY` | One worker for the existing stateful Python integration; verifier uses one. |
-| `DEMO_RESET_ENABLED` | Keep false. Reset is not physics recovery and has existing FK failures. |
-| `CORS_ORIGINS` | Exact frontend origin(s), as a comma-separated or JSON list. Default historical port 8501 does not authorize the React origin. |
-| `VITE_API_BASE_URL` | Backend origin without `/api/v1`; default `http://127.0.0.1:8001`. Build-time setting for production. |
-| `OPERATIONAL_FLEET_FILE`, `ANALYTICS_POLICY_FILE` | Optional sourced files. Unset when unused; an empty fleet path is interpreted as a directory. Never substitute fleet demo ratings for physics evidence. |
-| `TEST_DATABASE_URL` | Administrative test connection allowing CREATE/DROP of new disposable databases. The fixtures/verifier never migrate its retained database. |
+```text
+TELEMETRY SOURCES
+=================
 
-For an explicitly provisioned disposable database, from `backend/`, after setting
-`DATABASE_URL` and the settings above in a dedicated shell:
+ Python Simulator
+ (generation/replay)
+        |
+        v
+ Modbus Server
+ (FC04 register map)
+        |
+        v
+ Modbus Bridge
+ (durable message spool)
+        |
+        v
+ Mosquitto MQTT Broker ----------------------+
+                                              |
+ HTTP Telemetry and Batch API ---------------+----> SHARED INGESTION
+                                              |     FastAPI: validation,
+ Historical Replay API ----------------------+     normalization, idempotency
+                                                    |
+                         +--------------------------+------------------+
+                         |                                             |
+                         v                                             v
+                  ML Adapter and                              PostgreSQL
+              Transactional Pipeline                          Database
+                         |                                             |
+                         +---------------------> PostgreSQL <---------+
+                                                       |
+                                                       v
+                                               Versioned REST
+                                                  Read APIs
+                                                       |
+                                                       v
+                                         React + TypeScript Console
+
+Reliability acknowledgement:
+PostgreSQL committed receipt - - - - - - - -> Modbus Bridge
+(The bridge removes a spooled message only after confirming backend receipt.)
+```
+
+### Physics result path
+
+Physics is an optional extension of ingestion and persistence. Its read resource is separate from the regular analytics endpoints. It reports component-level units, status, coverage, provenance, assumptions, and reasons; a missing or unsupported result is represented as unavailable rather than a fabricated temperature.
+
+### Physics result path
+
+Physics is an optional extension of ingestion and persistence. Its read resource is separate from the regular analytics endpoints. It reports component-level units, status, coverage, provenance, assumptions, and reasons; a missing or unsupported result is represented as unavailable rather than a fabricated temperature.
+
+```text
+ACCEPTED TELEMETRY EVENT
+          |
+          v
+  Physics processing enabled
+  and inputs/config eligible?
+          |
+      +---+---+
+      |       |
+     NO      YES
+      |       |
+      v       v
+ Typed      Physics estimator
+ unavailable (controlled simulation
+ components   only)
+ with reasons       |
+ and provenance     v
+      |       Versioned component results
+      |       (values OR explicit unavailable states)
+      |               |
+      +-------+-------+
+              |
+              v
+     Shared database transaction
+              |
+              v
+  Physics events + asset-owned checkpoints
+              |
+              v
+       Physics Read API
+ (GET transformer physics endpoint)
+              |
+              v
+   Thermal and loading console view
+```
+
+
+## Components
+
+| Area | Implementation | Role |
+|---|---|---|
+| **Frontend** | React 19, TypeScript, Vite | Monitoring console with asset selection, bounded polling, telemetry and trend views, alerts, maintenance, and physics status. |
+| **Backend** | FastAPI, Pydantic, synchronous SQLAlchemy, psycopg, PostgreSQL | HTTP API, input validation, shared ingestion, persistence, read queries, MQTT consumer, and transactional ML integration. |
+| **ML runtime** | NumPy, pandas, SciPy, scikit-learn | Existing empirical analytics and stateful pipeline; separate controlled-simulation physics estimator; independent FEM and validation packages. |
+| **Simulator** | Python, pymodbus, Paho MQTT | Synthetic telemetry, scenarios, replay, Modbus server and bridge, streaming, and durable message spool. |
+| **Local stack** | Docker Compose | PostgreSQL, Mosquitto, backend, frontend, and opt-in simulator services. |
+
+### Monitoring console
+
+This captured overview shows the console layout with synthetic demo telemetry. It is a UI example, not live equipment data.
+
+![Transformer Digital Twin monitoring console overview with synthetic demo telemetry](frontend/screenshots/overview.png)
+
+### Main data flow
+
+1. The simulator can generate synthetic observations or replay available records. Its Modbus server exposes a declared register map; the bridge reads registers, translates them into telemetry, and publishes to MQTT.
+2. The backend accepts MQTT, HTTP, batch, and replay input through the same ingestion service. It validates contracts and event identity, records the observation, and invokes the configured ML adapter.
+3. Telemetry and eligible analytics are persisted in PostgreSQL. Stateful Python ML uses asset-owned checkpoints and participates in the database transaction. MQTT receipts let the bridge confirm backend commit before acknowledging/removing a spooled message.
+4. The read APIs expose bounded asset state, history, trends, alerts, maintenance, and physics resources. The frontend requests these resources and presents their values, errors, and missing-data states.
+
+## Repository map
+
+```text
+backend/       FastAPI app, API routes, services, repositories, schemas, migrations
+frontend/      React console, API contracts, hooks, components, styles, UI tests
+ml/            Analytics pipeline, physics estimator, FEM benchmark, validation
+simulator/     Telemetry generation, replay, Modbus/MQTT, spool, scenarios, runbooks
+docs/          Architecture, contracts, model limits, integration and release evidence
+tests/         Shared fixtures and validation tools
+docker-compose*.yml
+```
+
+Useful entry points and references:
+
+- Backend application: [`backend/app/main.py`](backend/app/main.py); setup and API details: [`backend/README.md`](backend/README.md).
+- Frontend entry: [`frontend/src/main.tsx`](frontend/src/main.tsx); setup: [`frontend/README.md`](frontend/README.md).
+- ML pipeline: [`ml/pipeline/orchestrator.py`](ml/pipeline/orchestrator.py); physics estimator: [`ml/physics/estimator.py`](ml/physics/estimator.py); synthetic FEM benchmark: [`ml/fem/`](ml/fem/).
+- Simulator CLI: [`simulator/simulator/cli.py`](simulator/simulator/cli.py); operating instructions: [`simulator/simulator_README.md`](simulator/simulator_README.md).
+- Current code and release boundaries: [architecture baseline](docs/architecture_current.md), [physics contract](docs/physics_contract.md), [model limitations](docs/model_limitations.md), [Phase 7 report](docs/phase7_report.md).
+
+## Contracts and model boundaries
+
+- **Telemetry and analytics:** values may be nullable; absent data stays absent. Event identity, timestamps, schema versions, and source context are explicit.
+- **Physics contract:** version `1.0.0`; the ten physics components have independent units, statuses, provenance, and nullable values. The contract can describe future capabilities that this release does not provide.
+- **Database schema:** backend schema version `1.1.0` is separate from the physics contract version. Migrations are required for the API readiness check.
+- **Operational readiness:** setting `PHYSICS_ENABLED=true` only enables processing; it does not create valid inputs, publish a supported profile, or make an operational prediction eligible.
+- **ML artifacts:** operational Python mode requires compatible artifacts and configuration. A stub is useful only for checking empty/unavailable-resource behavior and is not fitted analytics.
+- **Simulator data:** the configured fleet and scenarios are synthetic. Demo ratings, register values, and traces are not evidence about connected equipment.
+- **FEM and validation:** FEM is a synthetic steady-conduction reference. The validation harness checks explicit synthetic cases, not field accuracy or standards compliance.
+
+## Local development
+
+Use the package manifests and lock files already in the repository. The documented release-validation environment used Python 3.12.7, Node 24.14.1, and npm 11.11.0. A fresh setup needs the ML and backend Python packages, PostgreSQL, and the frontend dependencies. The following source-mode example expects an **explicitly provisioned disposable PostgreSQL database**; set its connection string in a dedicated shell and choose ports that are free.
+
+From the repository root, in PowerShell:
+
+```powershell
+python -m venv .venv
+.venv/Scripts/python.exe -m pip install -e ./ml -e ./backend
+```
+
+Then, from `backend/`, after setting `DATABASE_URL` to the disposable database:
 
 ```powershell
 $env:PHYSICS_ENABLED = 'false'
@@ -69,38 +184,24 @@ $env:CORS_ORIGINS = 'http://127.0.0.1:5177'
 ../.venv/Scripts/python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8002 --workers 1
 ```
 
-Choose unused ports; do not stop an unrelated listener. Migration 0005 adds four
-empty physics tables and readiness requires migration heads to match. Retained
-data migration, backups, image rollout and profile publication need a separate
-operator-approved procedure; none was performed in Phase 7. The Docker backend
-entrypoint automatically runs migrations, so restarting/recreating that deployment
-is not a harmless route-only check. Its application code is copied into the image:
-restarting an old image cannot add a missing source module.
-
-In a separate shell, from `frontend/`:
+In a second shell, from `frontend/`:
 
 ```powershell
+npm ci --ignore-scripts
 $env:VITE_API_BASE_URL = 'http://127.0.0.1:8002'
-node node_modules/vite/bin/vite.js --host 127.0.0.1 --port 5177 --strictPort
+npm run dev -- --host 127.0.0.1 --port 5177 --strictPort
 ```
 
-Check `/health/ready` and `/openapi.json`. Register an empty test identity through
-the existing POST `/api/v1/transformers` with only `id` and `name`; do not populate
-nameplates/sensors from guesses. Open the card and Thermal & loading: HTTP 200
-with ten unavailable values is the expected disabled response. With no eligible
-event/profile the values also stay unavailable. Unknown identity returns 404.
-No successful operational temperature can be demonstrated with this checkout's
-available evidence.
+The frontend API origin is a build-time setting for production. Configure the production API origin and matching CORS allowlist, or provide a same-origin reverse proxy. The default Vite proxy targets port `8001`, so it does not match the source-mode backend command above.
 
-The existing `VITE_API_BASE_URL=/` development proxy forwards `/api` to port 8001,
-not 8002. Production has no Vite proxy: configure a real API origin plus CORS, or
-an actual same-origin reverse proxy. Frontend API-origin changes require rebuilding
-the production bundle. The retained port-8001 backend still uses an older image
-without physics; the separate source verifier proves the route locally.
+Open `http://127.0.0.1:5177`. Check backend liveness/readiness at `/health` and `/health/ready`, and inspect `/openapi.json` for the active API contract. With physics disabled, the physics endpoint is expected to return unavailable components. This setup does not demonstrate a successful operational temperature prediction.
 
-## Reproducible verification
 
-From the root, in the configured existing environment:
+## Verification
+
+The repository includes fixture validators, focused ML tests, frontend tests, and a backend physics release verifier. These checks do not certify field accuracy or operational readiness.
+
+From the root, in the already configured project environment:
 
 ```powershell
 .venv/Scripts/python.exe tests/fixtures/physics/validate.py
@@ -108,26 +209,19 @@ From the root, in the configured existing environment:
 .venv/Scripts/python.exe -m ml.fem
 .venv/Scripts/python.exe -m ml.validation
 .venv/Scripts/python.exe -m pytest ml/tests/test_validation.py ml/tests/test_fem.py ml/tests/test_physics.py ml/tests/test_thermal_twin.py -q --tb=short
-.venv/Scripts/python.exe -m pytest ml/tests -q --tb=line -r f
-# Set TEST_DATABASE_URL through your approved test environment first:
-.venv/Scripts/python.exe backend/scripts/verify_physics_release.py
-git diff --check
 ```
 
-The last script creates a unique disposable PostgreSQL database, migrates only
-that database, starts its own loopback backend, checks disabled/no-profile modes,
-and stops its process/drops its database. It creates two identity-only assets;
-no telemetry or profile is installed. To add actual browser checks, supply
-`--browser-module <existing-playwright-module-path>` and
-`--browser-executable <existing-chromium-or-edge-executable>` together. It uses
-the already installed frontend dependencies and closes its own Vite/browser.
-Results, actual JSON and screenshots go to a named temporary directory printed
-by the script. Browser prerequisites are verification tools, not runtime dependencies.
+The backend release verifier requires a `TEST_DATABASE_URL` for an administrative PostgreSQL connection. It creates and drops a uniquely named disposable database; review [`backend/scripts/verify_physics_release.py`](backend/scripts/verify_physics_release.py) before using it. Frontend checks are `npm test -- --reporter=dot`, `npm run lint`, and `npm run build` from `frontend/`.
 
-From `frontend/`: `npm test -- --reporter=dot`, `npm run lint`, `npm run build`.
-From `backend/`: use the process-only pytest namespace/source-path workaround in
-[the Phase 7 command record](docs/phase7_report.md); the installed third-party
-`tests` package otherwise shadows repository tests. Broad backend/ML suites
-remain failing. Real broker tests are skipped without dedicated test-broker
-settings, and simulator collection is blocked by missing pymodbus. Do not use
-a demo ML mode or fabricate fitted files to disguise these failures.
+See the [Phase 7 report](docs/phase7_report.md) for exact release-validation results and known failures. The broad backend/ML suites remain failing in the documented environment, real broker tests need dedicated broker settings, and simulator test collection requires `pymodbus`. Do not present focused synthetic checks as a passing full-system or production validation.
+
+## Further reading
+
+- [Canonical physics-first implementation plan](Transformer_DigitalTwin_Physics_First_Implementation_Plan.md)
+- [Current architecture baseline](docs/architecture_current.md)
+- [Physics persistence and read integration](docs/physics_integration.md)
+- [Physics contract 1.0.0](docs/physics_contract.md)
+- [Physics source locators](docs/physics_references.md)
+- [Model limitations](docs/model_limitations.md)
+- [Phase 7 release report](docs/phase7_report.md)
+- [Backend documentation](backend/README.md) · [Frontend documentation](frontend/README.md) · [Simulator runbooks](simulator/RUNBOOK.md)
