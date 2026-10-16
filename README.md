@@ -215,7 +215,7 @@ The backend release verifier requires a `TEST_DATABASE_URL` for an administrativ
 
 See the [Phase 7 report](docs/phase7_report.md) for exact release-validation results and known failures. The broad backend/ML suites remain failing in the documented environment, real broker tests need dedicated broker settings, and simulator test collection requires `pymodbus`. Do not present focused synthetic checks as a passing full-system or production validation.
 
-## Further reading 
+## Further readings
 
 - [Canonical physics-first implementation plan](Transformer_DigitalTwin_Physics_First_Implementation_Plan.md)
 - [Current architecture baseline](docs/architecture_current.md)
